@@ -1,0 +1,40 @@
+format_version: 3.5.0
+name: esa
+title: "Elastic Security Advisories"
+version: 0.0.99
+source:
+  license: "Elastic-2.0"
+description: >
+  Collects Elastic Security Advisories (ESA) with CVE details and remediations.
+type: integration
+categories:
+  - custom
+  - security
+conditions:
+  kibana:
+    version: "8.11.1"
+  elastic:
+    capabilities:
+      - security
+    subscription: "basic"
+screenshots:
+  - src: /img/esa.png
+    title: Sample screenshot
+    size: 600x600
+    type: image/png
+icons:
+  - src: /img/sample-logo.svg
+    title: Sample logo
+    size: 32x32
+    type: image/svg+xml
+policy_templates:
+  - name: esa
+    title: Elastic Security Advisories 
+    description: Collect proactively vulnerability visibility by collection Elastic Security Advisories
+    inputs:
+      - type: cel
+        title: Elastic Security Advisories
+        description: Collect proactively vulnerability visibility by collection Elastic Security Advisories through RSS 
+owner:
+  github: tonyguillemot-tech
+  type: elastic

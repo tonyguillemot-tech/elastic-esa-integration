@@ -1,0 +1,1020 @@
+{
+    "attributes": {
+        "controlGroupInput": {
+            "chainingSystem": "HIERARCHICAL",
+            "controlStyle": "oneLine",
+            "ignoreParentSettingsJSON": {
+                "ignoreFilters": false,
+                "ignoreQuery": false,
+                "ignoreTimerange": false,
+                "ignoreValidations": false
+            },
+            "panelsJSON": {
+                "43b663d2-3d5f-4e51-baa1-4b7d66dedad1": {
+                    "explicitInput": {
+                        "dataViewId": "logs-*",
+                        "exclude": false,
+                        "existsSelected": false,
+                        "fieldName": "vulnerability.severity",
+                        "searchTechnique": "prefix",
+                        "selectedOptions": [],
+                        "sort": {
+                            "by": "_count",
+                            "direction": "desc"
+                        },
+                        "title": "Severity"
+                    },
+                    "grow": true,
+                    "order": 1,
+                    "type": "optionsListControl",
+                    "width": "medium"
+                },
+                "766f77e1-930a-4416-a471-3f28387ef8b0": {
+                    "explicitInput": {
+                        "dataViewId": "logs-*",
+                        "exclude": false,
+                        "existsSelected": false,
+                        "fieldName": "esa.vulnerability.product",
+                        "searchTechnique": "prefix",
+                        "selectedOptions": [],
+                        "sort": {
+                            "by": "_count",
+                            "direction": "desc"
+                        },
+                        "title": "Product"
+                    },
+                    "grow": true,
+                    "order": 0,
+                    "type": "optionsListControl",
+                    "width": "medium"
+                }
+            },
+            "showApplySelections": false
+        },
+        "description": "",
+        "kibanaSavedObjectMeta": {
+            "searchSourceJSON": {
+                "filter": [
+                    {
+                        "$state": {
+                            "store": "appState"
+                        },
+                        "meta": {
+                            "alias": null,
+                            "disabled": false,
+                            "field": "data_stream.dataset",
+                            "indexRefName": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+                            "key": "data_stream.dataset",
+                            "negate": false,
+                            "params": {
+                                "query": "esa.vulnerability"
+                            },
+                            "type": "phrase"
+                        },
+                        "query": {
+                            "match_phrase": {
+                                "data_stream.dataset": "esa.vulnerability"
+                            }
+                        }
+                    }
+                ],
+                "query": {
+                    "language": "kuery",
+                    "query": ""
+                }
+            }
+        },
+        "optionsJSON": {
+            "hidePanelTitles": false,
+            "syncColors": false,
+            "syncCursor": true,
+            "syncTooltips": false,
+            "useMargins": true
+        },
+        "panelsJSON": [
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-1a257f24-c7d1-41d8-bbfa-5d65f77c89e4",
+                                "type": "index-pattern"
+                            },
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-ec8d82c0-fc54-4114-a6c3-26e1f708a614",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "currentIndexPatternId": "logs-*",
+                                    "layers": {
+                                        "1a257f24-c7d1-41d8-bbfa-5d65f77c89e4": {
+                                            "columnOrder": [
+                                                "283ac98d-545c-4259-8c2b-04887adb6ee7",
+                                                "b0fde4dc-d462-42d4-ae45-fe4ecda8c75c"
+                                            ],
+                                            "columns": {
+                                                "283ac98d-545c-4259-8c2b-04887adb6ee7": {
+                                                    "dataType": "date",
+                                                    "isBucketed": true,
+                                                    "label": "@timestamp",
+                                                    "operationType": "date_histogram",
+                                                    "params": {
+                                                        "dropPartials": false,
+                                                        "includeEmptyRows": true,
+                                                        "interval": "auto"
+                                                    },
+                                                    "sourceField": "@timestamp"
+                                                },
+                                                "b0fde4dc-d462-42d4-ae45-fe4ecda8c75c": {
+                                                    "customLabel": true,
+                                                    "dataType": "number",
+                                                    "filter": {
+                                                        "language": "kuery",
+                                                        "query": "vulnerability.id : *"
+                                                    },
+                                                    "isBucketed": false,
+                                                    "label": "Elastic Security Advisories",
+                                                    "operationType": "unique_count",
+                                                    "params": {
+                                                        "emptyAsNull": false
+                                                    },
+                                                    "sourceField": "vulnerability.report_id"
+                                                }
+                                            },
+                                            "ignoreGlobalFilters": false,
+                                            "incompleteColumns": {},
+                                            "indexPatternId": "logs-*",
+                                            "linkToLayers": [
+                                                "ec8d82c0-fc54-4114-a6c3-26e1f708a614"
+                                            ],
+                                            "sampling": 1
+                                        },
+                                        "ec8d82c0-fc54-4114-a6c3-26e1f708a614": {
+                                            "columnOrder": [
+                                                "1f80f11c-ae5e-4cdc-bfc6-7b12350f849e"
+                                            ],
+                                            "columns": {
+                                                "1f80f11c-ae5e-4cdc-bfc6-7b12350f849e": {
+                                                    "customLabel": true,
+                                                    "dataType": "number",
+                                                    "filter": {
+                                                        "language": "kuery",
+                                                        "query": "vulnerability.id : *"
+                                                    },
+                                                    "isBucketed": false,
+                                                    "label": "Elastic Security Advisories",
+                                                    "operationType": "unique_count",
+                                                    "params": {
+                                                        "emptyAsNull": false
+                                                    },
+                                                    "sourceField": "vulnerability.report_id"
+                                                }
+                                            },
+                                            "ignoreGlobalFilters": false,
+                                            "incompleteColumns": {},
+                                            "indexPatternId": "logs-*",
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "currentIndexPatternId": "logs-*",
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "indexPatternRefs": [
+                                        {
+                                            "id": "logs-*",
+                                            "timeField": "@timestamp",
+                                            "title": "logs-*"
+                                        }
+                                    ],
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "applyColorTo": "background",
+                                "color": "#F6726A",
+                                "icon": "alert",
+                                "iconAlign": "right",
+                                "layerId": "ec8d82c0-fc54-4114-a6c3-26e1f708a614",
+                                "layerType": "data",
+                                "metricAccessor": "1f80f11c-ae5e-4cdc-bfc6-7b12350f849e",
+                                "secondaryLabelPosition": "before",
+                                "secondaryTrend": {
+                                    "type": "none"
+                                },
+                                "showBar": false,
+                                "trendlineLayerId": "1a257f24-c7d1-41d8-bbfa-5d65f77c89e4",
+                                "trendlineLayerType": "metricTrendline",
+                                "trendlineMetricAccessor": "b0fde4dc-d462-42d4-ae45-fe4ecda8c75c",
+                                "trendlineTimeAccessor": "283ac98d-545c-4259-8c2b-04887adb6ee7"
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "version": 1,
+                        "visualizationType": "lnsMetric"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false
+                },
+                "gridData": {
+                    "h": 5,
+                    "i": "64a6fca9-f11e-4ab9-b18a-36c1ac1c6f8b",
+                    "w": 13,
+                    "x": 0,
+                    "y": 0
+                },
+                "panelIndex": "64a6fca9-f11e-4ab9-b18a-36c1ac1c6f8b",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-esa.vulnerability*",
+                                "name": "indexpattern-datasource-layer-09b79c48-0054-4a75-91b5-82538f738086",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "currentIndexPatternId": "logs-esa.vulnerability*",
+                                    "layers": {
+                                        "09b79c48-0054-4a75-91b5-82538f738086": {
+                                            "columnOrder": [
+                                                "9a7478d6-84de-4bfb-98a7-6467ebd5a650",
+                                                "a88c99d0-b1d0-48c1-9a51-5253ded7bc02",
+                                                "9986ed2d-d7af-40ab-9387-18ba58ea8f64",
+                                                "9b5bc728-ae86-4faf-a8dc-0a0ed4ce9063",
+                                                "9331f05e-f0fb-41a5-be35-920271da66ec",
+                                                "45afbb29-2826-4615-b192-9d49c4fc18a9",
+                                                "cc782e1d-d03d-420b-9d35-c347d6557fa5"
+                                            ],
+                                            "columns": {
+                                                "45afbb29-2826-4615-b192-9d49c4fc18a9": {
+                                                    "customLabel": true,
+                                                    "dataType": "date",
+                                                    "isBucketed": true,
+                                                    "label": "Date added",
+                                                    "operationType": "date_histogram",
+                                                    "params": {
+                                                        "dropPartials": false,
+                                                        "includeEmptyRows": false,
+                                                        "interval": "d"
+                                                    },
+                                                    "sourceField": "@timestamp"
+                                                },
+                                                "9331f05e-f0fb-41a5-be35-920271da66ec": {
+                                                    "customLabel": true,
+                                                    "dataType": "string",
+                                                    "isBucketed": true,
+                                                    "label": "Title",
+                                                    "operationType": "terms",
+                                                    "params": {
+                                                        "exclude": [],
+                                                        "excludeIsRegex": false,
+                                                        "include": [],
+                                                        "includeIsRegex": false,
+                                                        "missingBucket": false,
+                                                        "orderBy": {
+                                                            "columnId": "cc782e1d-d03d-420b-9d35-c347d6557fa5",
+                                                            "type": "column"
+                                                        },
+                                                        "orderDirection": "desc",
+                                                        "otherBucket": true,
+                                                        "parentFormat": {
+                                                            "id": "terms"
+                                                        },
+                                                        "size": 100
+                                                    },
+                                                    "sourceField": "esa.vulnerability.name"
+                                                },
+                                                "9986ed2d-d7af-40ab-9387-18ba58ea8f64": {
+                                                    "customLabel": true,
+                                                    "dataType": "string",
+                                                    "isBucketed": true,
+                                                    "label": " ",
+                                                    "operationType": "terms",
+                                                    "params": {
+                                                        "exclude": [],
+                                                        "excludeIsRegex": false,
+                                                        "include": [],
+                                                        "includeIsRegex": false,
+                                                        "missingBucket": false,
+                                                        "orderBy": {
+                                                            "columnId": "cc782e1d-d03d-420b-9d35-c347d6557fa5",
+                                                            "type": "column"
+                                                        },
+                                                        "orderDirection": "desc",
+                                                        "otherBucket": false,
+                                                        "parentFormat": {
+                                                            "id": "terms"
+                                                        },
+                                                        "size": 10
+                                                    },
+                                                    "sourceField": "emoji"
+                                                },
+                                                "9a7478d6-84de-4bfb-98a7-6467ebd5a650": {
+                                                    "customLabel": true,
+                                                    "dataType": "string",
+                                                    "isBucketed": true,
+                                                    "label": "Product",
+                                                    "operationType": "terms",
+                                                    "params": {
+                                                        "exclude": [],
+                                                        "excludeIsRegex": false,
+                                                        "include": [],
+                                                        "includeIsRegex": false,
+                                                        "missingBucket": false,
+                                                        "orderBy": {
+                                                            "columnId": "cc782e1d-d03d-420b-9d35-c347d6557fa5",
+                                                            "type": "column"
+                                                        },
+                                                        "orderDirection": "desc",
+                                                        "otherBucket": true,
+                                                        "parentFormat": {
+                                                            "id": "terms"
+                                                        },
+                                                        "size": 10
+                                                    },
+                                                    "sourceField": "esa.vulnerability.product"
+                                                },
+                                                "9b5bc728-ae86-4faf-a8dc-0a0ed4ce9063": {
+                                                    "customLabel": true,
+                                                    "dataType": "string",
+                                                    "isBucketed": true,
+                                                    "label": "Severity",
+                                                    "operationType": "terms",
+                                                    "params": {
+                                                        "exclude": [],
+                                                        "excludeIsRegex": false,
+                                                        "include": [],
+                                                        "includeIsRegex": false,
+                                                        "missingBucket": false,
+                                                        "orderBy": {
+                                                            "columnId": "cc782e1d-d03d-420b-9d35-c347d6557fa5",
+                                                            "type": "column"
+                                                        },
+                                                        "orderDirection": "desc",
+                                                        "otherBucket": true,
+                                                        "parentFormat": {
+                                                            "id": "terms"
+                                                        },
+                                                        "size": 5
+                                                    },
+                                                    "sourceField": "vulnerability.severity"
+                                                },
+                                                "a88c99d0-b1d0-48c1-9a51-5253ded7bc02": {
+                                                    "customLabel": true,
+                                                    "dataType": "string",
+                                                    "isBucketed": true,
+                                                    "label": "CVE",
+                                                    "operationType": "terms",
+                                                    "params": {
+                                                        "exclude": [],
+                                                        "excludeIsRegex": false,
+                                                        "include": [],
+                                                        "includeIsRegex": false,
+                                                        "missingBucket": false,
+                                                        "orderBy": {
+                                                            "columnId": "cc782e1d-d03d-420b-9d35-c347d6557fa5",
+                                                            "type": "column"
+                                                        },
+                                                        "orderDirection": "desc",
+                                                        "otherBucket": true,
+                                                        "parentFormat": {
+                                                            "id": "terms"
+                                                        },
+                                                        "size": 100
+                                                    },
+                                                    "sourceField": "vulnerability.id"
+                                                },
+                                                "cc782e1d-d03d-420b-9d35-c347d6557fa5": {
+                                                    "dataType": "number",
+                                                    "isBucketed": false,
+                                                    "label": "Count of records",
+                                                    "operationType": "count",
+                                                    "params": {
+                                                        "emptyAsNull": true
+                                                    },
+                                                    "sourceField": "___records___"
+                                                }
+                                            },
+                                            "ignoreGlobalFilters": false,
+                                            "incompleteColumns": {},
+                                            "indexPatternId": "logs-esa.vulnerability*",
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "currentIndexPatternId": "logs-esa.vulnerability*",
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "indexPatternRefs": [
+                                        {
+                                            "id": "logs-esa.vulnerability*",
+                                            "timeField": "@timestamp",
+                                            "title": "logs-esa.vulnerability*"
+                                        }
+                                    ],
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "columns": [
+                                    {
+                                        "columnId": "9a7478d6-84de-4bfb-98a7-6467ebd5a650",
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "width": 400.16666666666674
+                                    },
+                                    {
+                                        "columnId": "45afbb29-2826-4615-b192-9d49c4fc18a9",
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "width": 323.66666666666663
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "columnId": "a88c99d0-b1d0-48c1-9a51-5253ded7bc02",
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "width": 169.16666666666663
+                                    },
+                                    {
+                                        "columnId": "cc782e1d-d03d-420b-9d35-c347d6557fa5",
+                                        "hidden": true,
+                                        "isMetric": true,
+                                        "isTransposed": false
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "columnId": "9b5bc728-ae86-4faf-a8dc-0a0ed4ce9063",
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "width": 176
+                                    },
+                                    {
+                                        "columnId": "9331f05e-f0fb-41a5-be35-920271da66ec",
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "width": 667
+                                    },
+                                    {
+                                        "alignment": "center",
+                                        "columnId": "9986ed2d-d7af-40ab-9387-18ba58ea8f64",
+                                        "isMetric": false,
+                                        "isTransposed": false,
+                                        "width": 50
+                                    }
+                                ],
+                                "layerId": "09b79c48-0054-4a75-91b5-82538f738086",
+                                "layerType": "data",
+                                "paging": {
+                                    "enabled": true,
+                                    "size": 10
+                                },
+                                "sorting": {
+                                    "columnId": "45afbb29-2826-4615-b192-9d49c4fc18a9",
+                                    "direction": "desc"
+                                }
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "version": 1,
+                        "visualizationType": "lnsDatatable"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Most recent vulnerabilities"
+                },
+                "gridData": {
+                    "h": 19,
+                    "i": "4019fdd2-7c87-4169-86af-796c82baf037",
+                    "w": 35,
+                    "x": 13,
+                    "y": 0
+                },
+                "panelIndex": "4019fdd2-7c87-4169-86af-796c82baf037",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-36cd7187-38e8-46df-93e5-87ad5cc45b04",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "layers": {
+                                        "36cd7187-38e8-46df-93e5-87ad5cc45b04": {
+                                            "columnOrder": [
+                                                "7744fe79-8883-4623-837c-8efd326e8bed",
+                                                "b3254150-aa5a-433e-bf16-582a47d98a26"
+                                            ],
+                                            "columns": {
+                                                "7744fe79-8883-4623-837c-8efd326e8bed": {
+                                                    "dataType": "string",
+                                                    "isBucketed": true,
+                                                    "label": "Top 10 values of esa.vulnerability.product",
+                                                    "operationType": "terms",
+                                                    "params": {
+                                                        "exclude": [],
+                                                        "excludeIsRegex": false,
+                                                        "include": [],
+                                                        "includeIsRegex": false,
+                                                        "missingBucket": false,
+                                                        "orderBy": {
+                                                            "columnId": "b3254150-aa5a-433e-bf16-582a47d98a26",
+                                                            "type": "column"
+                                                        },
+                                                        "orderDirection": "desc",
+                                                        "otherBucket": true,
+                                                        "parentFormat": {
+                                                            "id": "terms"
+                                                        },
+                                                        "size": 10
+                                                    },
+                                                    "sourceField": "esa.vulnerability.product"
+                                                },
+                                                "b3254150-aa5a-433e-bf16-582a47d98a26": {
+                                                    "dataType": "number",
+                                                    "isBucketed": false,
+                                                    "label": "Unique count of vulnerability.id",
+                                                    "operationType": "unique_count",
+                                                    "params": {
+                                                        "emptyAsNull": true
+                                                    },
+                                                    "sourceField": "vulnerability.id"
+                                                }
+                                            },
+                                            "ignoreGlobalFilters": false,
+                                            "incompleteColumns": {},
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "categoryDisplay": "default",
+                                        "colorMapping": {
+                                            "assignments": [],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "emptySizeRatio": 0.54,
+                                        "layerId": "36cd7187-38e8-46df-93e5-87ad5cc45b04",
+                                        "layerType": "data",
+                                        "legendDisplay": "default",
+                                        "metrics": [
+                                            "b3254150-aa5a-433e-bf16-582a47d98a26"
+                                        ],
+                                        "nestedLegend": false,
+                                        "numberDisplay": "percent",
+                                        "primaryGroups": [
+                                            "7744fe79-8883-4623-837c-8efd326e8bed"
+                                        ]
+                                    }
+                                ],
+                                "shape": "donut"
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "version": 1,
+                        "visualizationType": "lnsPie"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Impacted products"
+                },
+                "gridData": {
+                    "h": 14,
+                    "i": "024a346e-b724-419f-a1b0-a3c934dc7be2",
+                    "w": 13,
+                    "x": 0,
+                    "y": 5
+                },
+                "panelIndex": "024a346e-b724-419f-a1b0-a3c934dc7be2",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "attributes": {
+                        "references": [
+                            {
+                                "id": "logs-*",
+                                "name": "indexpattern-datasource-layer-f24a99ee-ff97-4267-81dc-a172fb9459b7",
+                                "type": "index-pattern"
+                            }
+                        ],
+                        "state": {
+                            "adHocDataViews": {},
+                            "datasourceStates": {
+                                "formBased": {
+                                    "currentIndexPatternId": "logs-*",
+                                    "layers": {
+                                        "f24a99ee-ff97-4267-81dc-a172fb9459b7": {
+                                            "columnOrder": [
+                                                "74eaa577-2c1d-4ecc-9d39-a62f5893e94e",
+                                                "4bafc9f5-176e-4ded-b357-00a76ad365f4",
+                                                "69683ee7-aecb-4046-9358-cdeb5056aaab"
+                                            ],
+                                            "columns": {
+                                                "4bafc9f5-176e-4ded-b357-00a76ad365f4": {
+                                                    "customLabel": true,
+                                                    "dataType": "date",
+                                                    "isBucketed": true,
+                                                    "label": "Elastic Security Advisories",
+                                                    "operationType": "date_histogram",
+                                                    "params": {
+                                                        "dropPartials": false,
+                                                        "includeEmptyRows": true,
+                                                        "interval": "1w"
+                                                    },
+                                                    "sourceField": "@timestamp"
+                                                },
+                                                "69683ee7-aecb-4046-9358-cdeb5056aaab": {
+                                                    "customLabel": true,
+                                                    "dataType": "number",
+                                                    "isBucketed": false,
+                                                    "label": "count",
+                                                    "operationType": "unique_count",
+                                                    "params": {
+                                                        "emptyAsNull": true
+                                                    },
+                                                    "sourceField": "vulnerability.id"
+                                                },
+                                                "74eaa577-2c1d-4ecc-9d39-a62f5893e94e": {
+                                                    "dataType": "string",
+                                                    "isBucketed": true,
+                                                    "label": "Top 3 values of vulnerability.severity",
+                                                    "operationType": "terms",
+                                                    "params": {
+                                                        "exclude": [],
+                                                        "excludeIsRegex": false,
+                                                        "include": [],
+                                                        "includeIsRegex": false,
+                                                        "missingBucket": false,
+                                                        "orderBy": {
+                                                            "columnId": "69683ee7-aecb-4046-9358-cdeb5056aaab",
+                                                            "type": "column"
+                                                        },
+                                                        "orderDirection": "desc",
+                                                        "otherBucket": true,
+                                                        "parentFormat": {
+                                                            "id": "terms"
+                                                        },
+                                                        "size": 3
+                                                    },
+                                                    "sourceField": "vulnerability.severity"
+                                                }
+                                            },
+                                            "ignoreGlobalFilters": false,
+                                            "incompleteColumns": {},
+                                            "indexPatternId": "logs-*",
+                                            "sampling": 1
+                                        }
+                                    }
+                                },
+                                "indexpattern": {
+                                    "currentIndexPatternId": "logs-*",
+                                    "layers": {}
+                                },
+                                "textBased": {
+                                    "indexPatternRefs": [
+                                        {
+                                            "id": "logs-*",
+                                            "timeField": "@timestamp",
+                                            "title": "logs-*"
+                                        }
+                                    ],
+                                    "layers": {}
+                                }
+                            },
+                            "filters": [],
+                            "internalReferences": [],
+                            "query": {
+                                "language": "kuery",
+                                "query": ""
+                            },
+                            "visualization": {
+                                "layers": [
+                                    {
+                                        "accessors": [
+                                            "69683ee7-aecb-4046-9358-cdeb5056aaab"
+                                        ],
+                                        "colorMapping": {
+                                            "assignments": [
+                                                {
+                                                    "color": {
+                                                        "colorCode": "#D90000",
+                                                        "type": "colorCode"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "raw",
+                                                            "value": "Critical"
+                                                        }
+                                                    ],
+                                                    "touched": true
+                                                },
+                                                {
+                                                    "color": {
+                                                        "colorCode": "#FF8800",
+                                                        "type": "colorCode"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "raw",
+                                                            "value": "High"
+                                                        }
+                                                    ],
+                                                    "touched": true
+                                                },
+                                                {
+                                                    "color": {
+                                                        "colorCode": "#FFB800",
+                                                        "type": "colorCode"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "raw",
+                                                            "value": "Medium"
+                                                        }
+                                                    ],
+                                                    "touched": true
+                                                }
+                                            ],
+                                            "colorMode": {
+                                                "type": "categorical"
+                                            },
+                                            "paletteId": "default",
+                                            "specialAssignments": [
+                                                {
+                                                    "color": {
+                                                        "type": "loop"
+                                                    },
+                                                    "rules": [
+                                                        {
+                                                            "type": "other"
+                                                        }
+                                                    ],
+                                                    "touched": false
+                                                }
+                                            ]
+                                        },
+                                        "layerId": "f24a99ee-ff97-4267-81dc-a172fb9459b7",
+                                        "layerType": "data",
+                                        "position": "top",
+                                        "seriesType": "bar_stacked",
+                                        "showGridlines": false,
+                                        "splitAccessor": "74eaa577-2c1d-4ecc-9d39-a62f5893e94e",
+                                        "xAccessor": "4bafc9f5-176e-4ded-b357-00a76ad365f4"
+                                    }
+                                ],
+                                "legend": {
+                                    "isVisible": true,
+                                    "position": "right"
+                                },
+                                "preferredSeriesType": "bar_stacked",
+                                "title": "Empty XY chart",
+                                "valueLabels": "hide"
+                            }
+                        },
+                        "title": "",
+                        "type": "lens",
+                        "version": 1,
+                        "visualizationType": "lnsXY"
+                    },
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "filters": [],
+                    "query": {
+                        "language": "kuery",
+                        "query": ""
+                    },
+                    "syncColors": false,
+                    "syncCursor": true,
+                    "syncTooltips": false,
+                    "title": "Elastic Security Advsories over time by severity"
+                },
+                "gridData": {
+                    "h": 8,
+                    "i": "6b231ff9-55df-4e48-86bc-ca50183e9686",
+                    "w": 48,
+                    "x": 0,
+                    "y": 19
+                },
+                "panelIndex": "6b231ff9-55df-4e48-86bc-ca50183e9686",
+                "type": "lens"
+            },
+            {
+                "embeddableConfig": {
+                    "enhancements": {
+                        "dynamicActions": {
+                            "events": []
+                        }
+                    },
+                    "grid": {
+                        "columns": {
+                            "emoji": {
+                                "width": 107
+                            },
+                            "esa.vulnerability.name": {
+                                "width": 607
+                            },
+                            "esa.vulnerability.product": {
+                                "width": 243
+                            },
+                            "vulnerability.description": {
+                                "width": 514
+                            },
+                            "vulnerability.id": {
+                                "width": 168
+                            },
+                            "vulnerability.reference": {
+                                "width": 204
+                            },
+                            "vulnerability.score.base": {
+                                "width": 221
+                            },
+                            "vulnerability.severity": {
+                                "width": 190
+                            }
+                        }
+                    },
+                    "rowsPerPage": 10
+                },
+                "gridData": {
+                    "h": 31,
+                    "i": "7ff4b2d1-2693-4fe5-85c3-47e8a1e1a4f7",
+                    "w": 48,
+                    "x": 0,
+                    "y": 27
+                },
+                "panelIndex": "7ff4b2d1-2693-4fe5-85c3-47e8a1e1a4f7",
+                "type": "search"
+            }
+        ],
+        "refreshInterval": {
+            "pause": true,
+            "value": 60000
+        },
+        "timeFrom": "now-1y/d",
+        "timeRestore": true,
+        "timeTo": "now",
+        "title": "[Elastic Security Advisories] Elastic vulnerabilities",
+        "version": 1
+    },
+    "coreMigrationVersion": "8.8.0",
+    "created_at": "2025-11-18T06:56:21.520Z",
+    "id": "esa-5cc9435a-97b3-4fc7-a72c-ccc5867c8dd9",
+    "references": [
+        {
+            "id": "logs-*",
+            "name": "64a6fca9-f11e-4ab9-b18a-36c1ac1c6f8b:indexpattern-datasource-layer-1a257f24-c7d1-41d8-bbfa-5d65f77c89e4",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "64a6fca9-f11e-4ab9-b18a-36c1ac1c6f8b:indexpattern-datasource-layer-ec8d82c0-fc54-4114-a6c3-26e1f708a614",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-esa.vulnerability*",
+            "name": "4019fdd2-7c87-4169-86af-796c82baf037:indexpattern-datasource-layer-09b79c48-0054-4a75-91b5-82538f738086",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "024a346e-b724-419f-a1b0-a3c934dc7be2:indexpattern-datasource-layer-36cd7187-38e8-46df-93e5-87ad5cc45b04",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "6b231ff9-55df-4e48-86bc-ca50183e9686:indexpattern-datasource-layer-f24a99ee-ff97-4267-81dc-a172fb9459b7",
+            "type": "index-pattern"
+        },
+        {
+            "id": "esa-4f2268c8-bde8-49b4-b835-a037f1e1e07a",
+            "name": "7ff4b2d1-2693-4fe5-85c3-47e8a1e1a4f7:savedObjectRef",
+            "type": "search"
+        },
+        {
+            "id": "logs-*",
+            "name": "controlGroup_766f77e1-930a-4416-a471-3f28387ef8b0:optionsListDataView",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-*",
+            "name": "controlGroup_43b663d2-3d5f-4e51-baa1-4b7d66dedad1:optionsListDataView",
+            "type": "index-pattern"
+        },
+        {
+            "id": "logs-esa.vulnerability*",
+            "name": "kibanaSavedObjectMeta.searchSourceJSON.filter[0].meta.index",
+            "type": "index-pattern"
+        }
+    ],
+    "type": "dashboard",
+    "typeMigrationVersion": "10.3.0",
+    "updated_by": "u_mGBROF_q5bmFCATbLXAcCwKa0k8JvONAwSruelyKA5E_0"
+}

@@ -1,0 +1,941 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:discourse="http://www.discourse.org/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Security Announcements - Discuss the Elastic Stack</title>
+    <link>https://discuss.elastic.co/c/announcements/security-announcements/31</link>
+    <description>Topics in the &#39;Security Announcements&#39; category Security announcements for the Elastic stack.</description>
+    
+      <lastBuildDate>Fri, 31 Oct 2025 17:36:53 +0000</lastBuildDate>
+      <atom:link href="https://discuss.elastic.co/c/announcements/security-announcements/31.rss" rel="self" type="application/rss+xml" />
+        <item>
+          <title>Elastic Cloud Enterprise (ECE) 3.8.3 and 4.0.3 Security Update (ESA-2025-22)</title>
+          <dc:creator><![CDATA[ikakavas]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Elastic Cloud Enterprise Improper Authorizatio</strong>n <strong>(ESA-2025-22)</strong></p>
+<p>Improper Authorization in Elastic Cloud Enterprise can lead to Privilege Escalation where the built-in readonly user can call APIs that should not be allowed. The list of APIs that are affected by this issue is:</p>
+<pre><code class="lang-auto">post:/platform/configuration/security/service-accounts
+delete:/platform/configuration/security/service-accounts/{user_id}
+patch:/platform/configuration/security/service-accounts/{user_id}
+post:/platform/configuration/security/service-accounts/{user_id}/keys
+delete:/platform/configuration/security/service-accounts/{user_id}/keys/{api_key_id}
+patch:/user
+post:/users
+post:/users/auth/keys
+delete:/users/auth/keys
+delete:/users/auth/keys/_all
+delete:/users/auth/keys/{api_key_id}
+delete:/users/{user_id}/auth/keys
+delete:/users/{user_id}/auth/keys/{api_key_id}
+delete:/users/{user_name}
+patch:/users/{user_name} 
+</code></pre>
+<p><strong>Affected Versions:</strong></p>
+<p>Elastic Cloud Enterprise versions after 3.8.0 and up to including 3.8.2</p>
+<p>Elastic Cloud Enterprise versions after 4.0.0 and up to including 4.0.2</p>
+<p><strong>Affected Configurations:</strong></p>
+<p>This issue affects all ECE users.</p>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>Users should upgrade to version 3.8.3 and 4.0.3. In addition to the upgrade, Elastic Cloud Enterprise users should investigate whether there exist any users or service accounts that have been created by the readonly user and potentially delete them. The <a href="https://github.com/elastic/cleanup-ece-users">following tooling</a> offers this functionality. Elastic advises extreme caution while deleting users, to ensure that only the necessary ones are deleted.</p>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p>Users that cannot upgrade, should also use the <a href="https://github.com/elastic/cleanup-ece-users">provided tooling</a> to list users or service accounts that have been created by the readonly user and potentially delete them.</p>
+<p><strong>Severity:</strong> CVSSv3.1: 8.8(High) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H}</p>
+<p><strong>CVE ID</strong>: CVE-2025-37736</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/elastic-cloud-enterprise-ece-3-8-3-and-4-0-3-security-update-esa-2025-22/383132">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/elastic-cloud-enterprise-ece-3-8-3-and-4-0-3-security-update-esa-2025-22/383132</link>
+          <pubDate>Fri, 31 Oct 2025 17:36:53 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-383132</guid>
+          <source url="https://discuss.elastic.co/t/elastic-cloud-enterprise-ece-3-8-3-and-4-0-3-security-update-esa-2025-22/383132.rss">Elastic Cloud Enterprise (ECE) 3.8.3 and 4.0.3 Security Update (ESA-2025-22)</source>
+        </item>
+        <item>
+          <title>Elastic Cloud Enterprise (ECE) 3.8.2 and 4.0.2 Security Update (ESA-2025-21)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Elastic Cloud Enterprise (ECE) Improper Neutralization of Special Elements Used in a Template Engine (ESA-2025-21)</strong></p>
+<p>Improper neutralization of special elements used in a template engine in Elastic Cloud Enterprise (ECE) can lead to a malicious actor with Admin access exfiltrating sensitive information and issuing commands via a specially crafted string where Jinjava variables are evaluated.</p>
+<p><strong>Affected Versions:</strong></p>
+<p>Versions starting from 2.5.0 up to and including 3.8.1, and versions starting from 4.0.0 up to and including 4.0.1.</p>
+<p><strong>Affected Configurations:</strong></p>
+<p>This issue can only be exploited by users with access to the Elastic Cloud Enterprise (ECE) admin-console and access to a deployment with the Logging+Metrics feature enabled. By submitting plans with specially crafted payloads it is possible to inject code to be executed and the result to be read back via the ingested logs.</p>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>Users should upgrade to version 3.8.2 and 4.0.2.</p>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p>There are no workarounds</p>
+<p><strong>Indicators of Compromise (IOC)</strong></p>
+<p>Users can monitor the request logs for malicious payloads, by using the search query:</p>
+<ul>
+<li><code>(payload.name : int3rpr3t3r or payload.name : forPath)</code></li>
+</ul>
+<p><strong>Severity:</strong> CVSSv3.1: 9.1 (Critical)  - <a href="https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H">CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H</a></p>
+<p><strong>CVE ID</strong>: CVE-2025-37729</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/elastic-cloud-enterprise-ece-3-8-2-and-4-0-2-security-update-esa-2025-21/382641">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/elastic-cloud-enterprise-ece-3-8-2-and-4-0-2-security-update-esa-2025-21/382641</link>
+          <pubDate>Mon, 13 Oct 2025 13:44:01 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-382641</guid>
+          <source url="https://discuss.elastic.co/t/elastic-cloud-enterprise-ece-3-8-2-and-4-0-2-security-update-esa-2025-21/382641.rss">Elastic Cloud Enterprise (ECE) 3.8.2 and 4.0.2 Security Update (ESA-2025-21)</source>
+        </item>
+        <item>
+          <title>Kibana - Crowdstrike Connector 8.18.8, 8.19.5, 9.0.8, and 9.1.5 Security Update (ESA-2025-19)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana Insufficiently Protected Credentials in the CrowdStrike Connector (ESA-2025-19)</strong></p>
+<p>Insufficiently Protected Credentials in the Crowdstrike connector can lead to Crowdstrike credentials being leaked. A malicious user can access cached credentials from an Elastic Crowdstrike connector in another space by creating and running a Crowdstrike connector in a space to which they have access.</p>
+<p><strong>Affected Versions:</strong></p>
+<ul>
+<li><strong>7.x:</strong> All versions prior to and including 7.17.29</li>
+<li><strong>8.x:</strong> All versions from 8.14.0 and up to and including 8.18.7</li>
+<li><strong>8.19.x:</strong> All versions from 8.19.0 and up to and including 8.19.4</li>
+<li><strong>9.0.x:</strong> All versions from 9.0.0 and up to and including 9.0.7</li>
+<li><strong>9.1.x:</strong> All versions from 9.1.0 and up to and including 9.1.4</li>
+</ul>
+<p><strong>Affected Configurations:</strong></p>
+<p>Kibana instances using the CrowdStrike Connector</p>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>The issue is resolved in versions 8.18.8 or 8.19.5 or 9.0.8 or 9.1.5.</p>
+<p><strong>For Users that Cannot Upgrade:</strong><br>
+There are no workarounds</p>
+<p><strong>Severity:</strong> CVSSv3.1: Medium (5.4) CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N</p>
+<p><strong>CVE ID</strong>: CVE-2025-37728</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-crowdstrike-connector-8-18-8-8-19-5-9-0-8-and-9-1-5-security-update-esa-2025-19/382455">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-crowdstrike-connector-8-18-8-8-19-5-9-0-8-and-9-1-5-security-update-esa-2025-19/382455</link>
+          <pubDate>Mon, 06 Oct 2025 16:44:50 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-382455</guid>
+          <source url="https://discuss.elastic.co/t/kibana-crowdstrike-connector-8-18-8-8-19-5-9-0-8-and-9-1-5-security-update-esa-2025-19/382455.rss">Kibana - Crowdstrike Connector 8.18.8, 8.19.5, 9.0.8, and 9.1.5 Security Update (ESA-2025-19)</source>
+        </item>
+        <item>
+          <title>Elasticsearch 8.18.8, 8.19.5, 9.0.8, 9.1.5 Security Update (ESA-2025-18)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Elasticsearch Insertion of sensitive information in log file (ESA-2025-18)</strong></p>
+<p>Insertion of sensitive information in log file in Elasticsearch can lead to loss of confidentiality under specific preconditions when auditing requests to the <a href="https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex">reindex API</a></p>
+<p><strong>Affected Versions:</strong></p>
+<ul>
+<li><strong>7.x:</strong> All versions from 7.0.0 and up to and including 7.17.29</li>
+<li><strong>8.x:</strong> All versions from 8.0.0 and up to and including 8.18.7</li>
+<li><strong>8.19.x:</strong> All versions from 8.19.0 and up to and including 8.19.4</li>
+<li><strong>9.0.x:</strong> All versions from 9.0.0 and up to and including 9.0.7</li>
+<li><strong>9.1.x:</strong> All versions from 9.1.0 and up to and including 9.1.4</li>
+</ul>
+<p><strong>Affected Configurations:</strong></p>
+<p>This affects deployments where all the below are true:</p>
+<ul>
+<li>
+<p>Audit logging is enabled ( <code>xpack.security.audit.enabled: true</code> )</p>
+</li>
+<li>
+<p>Audit logging is configured to contain authentication_success events ( <code>xpack.security.audit.logfile.events.include includes authentication_success</code> )</p>
+</li>
+<li>
+<p>Audit logging is explicitly configured to capture request bodies ( <code>xpack.security.audit.logfile.events.emit_request_body: true</code> ). The default value is <code>false</code>.</p>
+</li>
+</ul>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>The issue is resolved in version 8.18.8, 8.19.5, 9.0.8, 9.1.5.</p>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p>If the affected configuration is in use:</p>
+<p><strong>Self-hosted</strong></p>
+<p>Users can set <code>xpack.security.audit.logfile.events.emit_request_body</code> to <code>false</code></p>
+<p><strong>Cloud</strong></p>
+<p>Users can set <code>xpack.security.audit.logfile.events.emit_request_body</code> to <code>false</code></p>
+<p><strong>Severity:</strong> CVSSv3.1: Medium(5.3) CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N</p>
+<p><strong>CVE ID</strong>: CVE-2025-37727</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/elasticsearch-8-18-8-8-19-5-9-0-8-9-1-5-security-update-esa-2025-18/382453">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/elasticsearch-8-18-8-8-19-5-9-0-8-9-1-5-security-update-esa-2025-18/382453</link>
+          <pubDate>Mon, 06 Oct 2025 16:40:57 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-382453</guid>
+          <source url="https://discuss.elastic.co/t/elasticsearch-8-18-8-8-19-5-9-0-8-9-1-5-security-update-esa-2025-18/382453.rss">Elasticsearch 8.18.8, 8.19.5, 9.0.8, 9.1.5 Security Update (ESA-2025-18)</source>
+        </item>
+        <item>
+          <title>Kibana 8.18.8, 8.19.5, 9.0.8, 9.1.5 Security Update (ESA-2025-17)</title>
+          <dc:creator><![CDATA[ikakavas]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana Stored Cross-Site-Scripting(XSS) (ESA-2025-17)</strong></p>
+<p>Improper Validation of Specified Type of Input in Kibana can lead to stored Cross-Site-Scripting (XSS)</p>
+<p><strong>Affected Versions:</strong></p>
+<ul>
+<li><strong>7.x:</strong> All versions from 7.0.0 and up to and including 7.17.29</li>
+<li><strong>8.x:</strong> All versions from 8.0.0 and up to and including 8.18.7</li>
+<li><strong>8.19.x:</strong> All versions from 8.19.0 and up to and including 8.19.4</li>
+<li><strong>9.0.x:</strong> All versions from 9.0.0 and up to and including 9.0.7</li>
+<li><strong>9.1.x</strong>: All versions from 9.1.0 and up to and including 9.1.4</li>
+</ul>
+<p><strong>Affected Configurations:</strong></p>
+<p>A malicious user would need to have a role that includes All permissions under Management for Fleet and Integrations.</p>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>Users should upgrade to version 8.18.8 or 8.19.5 or 9.0.8 or 9.1.5.</p>
+<p><strong>Severity:</strong> CVSSv3.1: High (8.7) <a href="https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N">CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N</a></p>
+<p><strong>CVE ID</strong>: CVE-2025-25018</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-8-18-8-8-19-5-9-0-8-9-1-5-security-update-esa-2025-17/382451">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-8-18-8-8-19-5-9-0-8-9-1-5-security-update-esa-2025-17/382451</link>
+          <pubDate>Mon, 06 Oct 2025 16:28:59 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-382451</guid>
+          <source url="https://discuss.elastic.co/t/kibana-8-18-8-8-19-5-9-0-8-9-1-5-security-update-esa-2025-17/382451.rss">Kibana 8.18.8, 8.19.5, 9.0.8, 9.1.5 Security Update (ESA-2025-17)</source>
+        </item>
+        <item>
+          <title>Kibana 8.18.8, 8.19.4, 9.0.7, 9.1.4 Security Update (ESA-2025-16)</title>
+          <dc:creator><![CDATA[ikakavas]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana Cross-Site-Scripting (XSS) (ESA-2025-16)</strong></p>
+<p>Improper Neutralization of Input During Web Page Generation in Vega visualizations in Kibana can lead to Cross-Site-Scripting (XSS)</p>
+<p><strong>Affected Versions:</strong></p>
+<ul>
+<li><strong>7.x:</strong> All versions from 7.0.0 and up to and including 7.17.29</li>
+<li><strong>8.x:</strong> All versions from 8.0.0 and up to and including 8.18.7</li>
+<li><strong>8.19.x:</strong> All versions from 8.19.0 and up to and including 8.19.3</li>
+<li><strong>9.0.x:</strong> All versions from 9.0.0 and up to and including 9.0.6</li>
+<li><strong>9.1.x:</strong> All versions from 9.1.0 and up to and including 9.1.3</li>
+</ul>
+<p><strong>Affected Configurations:</strong></p>
+<p>All Kibana configurations are affected.</p>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>Users should upgrade to version 8.18.8 or 8.19.4 or 9.0.7 or 9.1.4.</p>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p>If you are unable to upgrade, you can select to disable Vega visualizations :</p>
+<p><strong>Self-hosted</strong></p>
+<p>For on premise installations, you can set <code>vis_type_vega.enabled: false</code> in <code>kibana.yml</code> file. Note that this will disable all Vega charts in Kibana.</p>
+<p><strong>Cloud</strong></p>
+<p>For Elastic Cloud services deployments, you can reach out to Elastic Support to request that vega visualizations are disabled in your deployments.</p>
+<p><strong>Severity:</strong> CVSSv3.1: 8.2 (High) - <a href="https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:N">CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:N</a></p>
+<p><strong>CVE ID</strong>: CVE-2025-25017</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-8-18-8-8-19-4-9-0-7-9-1-4-security-update-esa-2025-16/382450">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-8-18-8-8-19-4-9-0-7-9-1-4-security-update-esa-2025-16/382450</link>
+          <pubDate>Mon, 06 Oct 2025 16:24:58 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-382450</guid>
+          <source url="https://discuss.elastic.co/t/kibana-8-18-8-8-19-4-9-0-7-9-1-4-security-update-esa-2025-16/382450.rss">Kibana 8.18.8, 8.19.4, 9.0.7, 9.1.4 Security Update (ESA-2025-16)</source>
+        </item>
+        <item>
+          <title>Kibana 8.18.8, 8.19.5, 9.0.8, and 9.1.5 Security Update (ESA-2025-20)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana Cross-Site Scripting (XSS) (ESA-2025-20)</strong></p>
+<p>Improper Neutralization of Input During Web Page Generation in Kibana can lead to Stored XSS via case file upload.</p>
+<p><strong>Affected Versions:</strong></p>
+<ul>
+<li><strong>7.x:</strong> All versions prior to and including 7.17.29</li>
+<li><strong>8.x:</strong> All versions from 8.0.0 up to and including 8.18.7</li>
+<li><strong>8.19.x:</strong> All versions from 8.19.0 up to and including 8.19.4</li>
+<li><strong>9.0.x:</strong> All versions from 9.0.0 up to and including 9.0.7</li>
+<li><strong>9.1.x:</strong> All versions from 9.1.0 up to and including 9.1.4</li>
+</ul>
+<p><strong>Affected Configurations:</strong></p>
+<p>The attacker requires the ability to upload files to Kibana, see <a href="https://www.elastic.co/docs/explore-analyze/alerts-cases/cases/manage-cases#add-case-files">https://www.elastic.co/docs/explore-analyze/alerts-cases/cases/manage-cases#add-case-files</a></p>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>Users should upgrade to the versions below or later:</p>
+<ul>
+<li><strong>8.18.8</strong></li>
+<li><strong>8.19.5</strong></li>
+<li><strong>9.0.8</strong></li>
+<li><strong>9.1.5</strong></li>
+</ul>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p><strong>Self-hosted &amp; Cloud</strong></p>
+<p>For versions &gt;= 7.12 to &lt; 9.0 user’s can set <code>discover:searchFieldsFromSource: true</code> in Advanced Settings</p>
+<p>There are <strong>no</strong> workarounds for 9.0+</p>
+<p><strong>Severity:</strong> CVSSv3.1: 8.7 (High) - <a href="https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N">CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N</a></p>
+<p><strong>CVE ID</strong>: CVE-2025-25009</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-8-18-8-8-19-5-9-0-8-and-9-1-5-security-update-esa-2025-20/382449">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-8-18-8-8-19-5-9-0-8-and-9-1-5-security-update-esa-2025-20/382449</link>
+          <pubDate>Mon, 06 Oct 2025 16:20:21 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-382449</guid>
+          <source url="https://discuss.elastic.co/t/kibana-8-18-8-8-19-5-9-0-8-and-9-1-5-security-update-esa-2025-20/382449.rss">Kibana 8.18.8, 8.19.5, 9.0.8, and 9.1.5 Security Update (ESA-2025-20)</source>
+        </item>
+        <item>
+          <title>Enterprise Search 8.18.6, 8.19.3 Security Update (ESA-2025-15) (CVE-2025-54988)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Enterprise Search XML external entity (XXE) injection in Apache Tika (ESA-2025-15)</strong></p>
+<p>On August 20, 2025, CVE-2025-54988 in Apache Tika PDF parser module was announced, disclosing an XML External Entity injection flaw in the Apache Tika tika-parser-pdf-module. This vulnerability allows an attacker to provide a crafted XFA file within a PDF, read sensitive data, or trigger malicious requests to internal resources or third-party servers.</p>
+<p>This issue affects Enterprise Search, however the severity is reduced from critical to high due to the attacker requiring authentication. Threat actors can trigger the Apache Tika XXE vulnerability in Enterprise Search by providing a malformed PDF to be ingested, which can trigger unauthorized requests to internal resources or third-party servers, or could be used to read sensitive data.</p>
+<p><strong>Affected Versions:</strong><br>
+8.0.0 up to and including 8.19.2</p>
+<p><strong>Affected Configurations:</strong></p>
+<p>Only Workplace Search is affected. App Search and Elastic Crawler users are not affected.</p>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>Users should upgrade to version 8.18.6, 8.19.3.</p>
+<p><strong>Severity:</strong> CVSSv3.1: 8.8(High) - CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H/MPR:L</p>
+<p><strong>CVE ID</strong>: CVE-2025-54988</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/enterprise-search-8-18-6-8-19-3-security-update-esa-2025-15-cve-2025-54988/381428">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/enterprise-search-8-18-6-8-19-3-security-update-esa-2025-15-cve-2025-54988/381428</link>
+          <pubDate>Thu, 28 Aug 2025 15:39:46 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-381428</guid>
+          <source url="https://discuss.elastic.co/t/enterprise-search-8-18-6-8-19-3-security-update-esa-2025-15-cve-2025-54988/381428.rss">Enterprise Search 8.18.6, 8.19.3 Security Update (ESA-2025-15) (CVE-2025-54988)</source>
+        </item>
+        <item>
+          <title>Elasticsearch 8.18.6, 8.19.3, 9.0.6, and 9.1.3 Security Update (ESA-2025-14) (CVE-2025-54988)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Elasticsearch XML external entity (XXE) injection in Apache Tika (ESA-2025-14)</strong></p>
+<p>On August 20, 2025, CVE-2025-54988 in Apache Tika PDF parser module was announced, disclosing an XML External Entity injection flaw in the Apache Tika tika-parser-pdf-module. This vulnerability allows an attacker to provide a crafted XFA file within a PDF, read sensitive data, or trigger malicious requests to internal resources or third-party servers.</p>
+<p>This issue affects Elasticsearch, however the severity is reduced from critical to high due to the attacker requiring authentication. Threat actors can trigger the Apache Tika XXE vulnerability in Elasticsearch by providing a malformed PDF to the ingest attachment processor, which can trigger unauthorized requests to internal resources or third-party servers, or could be used to read sensitive data.</p>
+<p><strong>Affected Versions:</strong><br>
+8.18.0 up to and including 8.18.5, 8.19.0 up to and including 8.19.2, 9.0.0 up to and including 9.0.5, 9.1.0 up to and including 9.1.2</p>
+<p><strong>Affected Configurations:</strong></p>
+<p>Elasticsearch is affected by this only when using the ingest attachment processor.</p>
+<p>For ​​versions of Elasticsearch that use the Java Security Manager, which include 8.17.8 and below, the risk is mitigated as the Java Security Manager prevents the exploitation of the vulnerability.</p>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>Users should upgrade to version 8.18.6, 8.19.3, 9.0.6, and 9.1.3.</p>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p>We <strong>strongly</strong> recommend users to upgrade. The following workarounds will mitigate the security issue but can have a serious impact on data ingestion.</p>
+<p>Users that cannot upgrade could delete any ingest pipelines that call the “attachment” processor and handle untrusted PDF files. Note that this can cause ingest to fail or will produce data that has bypassed any enrichment or transformation logic that existed in the deleted pipelines.</p>
+<ol>
+<li>
+<p>Find all pipelines that have an attachment processor with the <a href="https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-pipeline">Get Ingest Pipelines API</a>:</p>
+<p><code>GET _ingest/pipeline</code></p>
+<p>This will return all pipelines in the system, with the key of each top-level object being the pipeline name.</p>
+</li>
+<li>
+<p>Look for any processors in the result that are labeled “<em>attachment</em>”, and record the pipeline name.</p>
+</li>
+<li>
+<p>Attempt to delete each of those pipelines with the <a href="https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-pipeline">Delete Ingest Pipeline API</a> to delete the pipeline:</p>
+<p><code>DELETE _ingest/pipeline/pipeline1</code></p>
+</li>
+</ol>
+<p>Note that built-in pipelines, like <strong>search-default-ingestion</strong>, cannot be deleted. Calling the Delete Ingest Pipeline API will report success but the pipeline will be immediately recreated.</p>
+<p>Also ,attempts to delete some pipelines will fail with an “illegal_argument_exception”  because those pipelines are configured to be the default or final pipeline of an index.</p>
+<p>An alternative is to delete the ingest attachment module on each Elasticsearch server, with the impact of any pipeline that uses the attachment processor failing. This means that any pipelines that transform data from various formats like Word, Excel, or PDF files would fail. Customers would not be able to ingest this data. Attempts to do so would get an HTTP response with status code “500”, and a root cause type of <code>illegal_state_exception</code>. This workaround can only be applied on Self-Hosted Elasticsearch Clusters.</p>
+<ol>
+<li>
+<p>On each Elasticsearch node in a cluster, change to the Elasticsearch installations’s top-level directory</p>
+</li>
+<li>
+<p>Delete the ingest attachment module by calling “rm -Rf modules/ingest-attachment"</p>
+</li>
+<li>
+<p>Restart the Elasticsearch server</p>
+</li>
+</ol>
+<p><strong>Severity:</strong> CVSSv3.1: 8.8(High) - CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H/MPR:L</p>
+<p><strong>CVE ID</strong>: CVE-2025-54988</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/elasticsearch-8-18-6-8-19-3-9-0-6-and-9-1-3-security-update-esa-2025-14-cve-2025-54988/381427">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/elasticsearch-8-18-6-8-19-3-9-0-6-and-9-1-3-security-update-esa-2025-14-cve-2025-54988/381427</link>
+          <pubDate>Thu, 28 Aug 2025 15:38:52 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-381427</guid>
+          <source url="https://discuss.elastic.co/t/elasticsearch-8-18-6-8-19-3-9-0-6-and-9-1-3-security-update-esa-2025-14-cve-2025-54988/381427.rss">Elasticsearch 8.18.6, 8.19.3, 9.0.6, and 9.1.3 Security Update (ESA-2025-14) (CVE-2025-54988)</source>
+        </item>
+        <item>
+          <title>Kibana 9.0.6, 9.1.3 Security Update (ESA-2025-13)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana privilege escalation via <code>reporting_user</code> role (ESA-2025-13)</strong></p>
+<p>Incorrect authorization in Kibana can lead to privilege escalation via the built-in <code>reporting_user</code> role which incorrectly has the ability to access all Kibana Spaces.</p>
+<p><strong>Affected Versions:</strong></p>
+<p>Kibana versions starting from and including 9.0.0, up to and including 9.0.5; and versions from and including 9.1.0 up to and including 9.1.2.</p>
+<p><strong>Affected Configurations:</strong></p>
+<p>This issue affects deployments which assign the built-in <code>reporting_user</code> role to end users. This role is not assigned to users by default.</p>
+<p>The <code>reporting_user</code> role in affected versions incorrectly grants users the ability to access <strong>all</strong> Kibana Spaces, with the following privileges:</p>
+<ul>
+<li>
+<p>Read access to Discover, including the ability to generate reports.</p>
+</li>
+<li>
+<p>Read access to Dashboards, including the ability to generate reports.</p>
+</li>
+<li>
+<p>Read access to the Visualization Library, including the ability to generate reports.</p>
+</li>
+<li>
+<p>Read access to Canvas, including the ability to generate reports.</p>
+</li>
+</ul>
+<p>The <code>reporting_user</code> role in versions prior to 9.0 did not grant access to any Kibana Spaces; it only granted reporting functionality within the Spaces users were already authorized to access.</p>
+<p><strong>Important:</strong> This vulnerability does not violate configured index privileges. Users with the <code>reporting_user</code> role assigned will not have access to any additional user documents or indices. They will be able to access the aforementioned Kibana assets, but not the data within, unless their existing index privileges would otherwise grant access.</p>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>The issue is resolved in version 9.0.6 and 9.1.3. Note that versions prior to 9.0.0 are not affected.</p>
+<p>Any API Keys created by users with the <code>reporting_user</code> role in the affected versions will continue to have elevated privileges. Ensure these API Keys are <a href="https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-invalidate-api-key">invalidated</a> to prevent unauthorized access to additional Spaces.</p>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p>Administrators should revoke the <code>reporting_user</code> role from their end users, and instead grant access to reporting functionality via custom roles which grant the appropriate access to reporting.</p>
+<p><strong>Severity:</strong> CVSSv3.1: 6.5 (Medium) <a href="https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N">CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N</a></p>
+<p><strong>CVE ID</strong>: CVE-2025-25010</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-9-0-6-9-1-3-security-update-esa-2025-13/381426">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-9-0-6-9-1-3-security-update-esa-2025-13/381426</link>
+          <pubDate>Thu, 28 Aug 2025 15:35:08 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-381426</guid>
+          <source url="https://discuss.elastic.co/t/kibana-9-0-6-9-1-3-security-update-esa-2025-13/381426.rss">Kibana 9.0.6, 9.1.3 Security Update (ESA-2025-13)</source>
+        </item>
+        <item>
+          <title>Elastic Response to Blog ‘EDR 0-Day Vulnerability’</title>
+          <dc:creator><![CDATA[Levine]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <blockquote>
+<p>Updated: August 29, 2025</p>
+<p>Elastic has been directly engaging with the independent researcher. After evaluating additional information provided by the researcher, our original assessment still stands. To confirm we are responsibly assessing this report and providing an unbiased perspective, we are engaging a neutral third-party to review the finding. For users of Elastic Defend, no action is required.</p>
+</blockquote>
+<p>On August 23rd, Elastic received additional data from the original researcher in the form of crash dumps and a proof of concept (PoC) involving an executable and a kernel driver. Since then, Elastic has been directly engaging with the researcher.</p>
+<p>The crash dumps were caused by a known stability issue in the 8.17.0 Elastic Defend driver which was first reported by a customer in April. We take such reports seriously, so we released a fix a week later in versions 8.17.6, 8.18.1, and 9.0.1 on May 6th, one month before the researcher’s initial bug report. A description of the bug is available in our release <strong><a href="https://www.elastic.co/guide/en/security/8.19/release-notes-header-8.17.0.html#bug-fixes-8.17.6">notes</a></strong> (IRQL_NOT_LESS_OR_EQUAL bugcheck). While primarily observed in the presence of Trellix, the bug could be reached through other third-party software or conditions.</p>
+<p>The PoC does not reproduce the bug detailed above nor does it demonstrate any new security bugs or vulnerabilities as stated in the researcher's updated blog. Rather, it leverages administrator rights to enable <strong><a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/install/test-signing">test signing</a></strong>, reboot the system, then load a custom unsigned kernel driver. The driver unsuccessfully attempts to modify a non-writable region of our kernel driver's memory at offset 0x120DD using the ExAcquireFastMutex function. Memory page protections block this attempt, resulting in a BSOD/bugcheck with a separate ATTEMPTED_WRITE_TO_READONLY_MEMORY error code. Because the non-writable address resides within our kernel driver’s memory range, the resulting blue screen unfortunately names our driver. With administrator rights being used to load a custom unsigned kernel driver, this approach can be used to target any driver on the system. In summary, the crash resulting from the researcher’s kernel driver PoC was due to a bug in the PoC code, and was unrelated to Elastic Defend.As with all software, we recommend users stay up to date with <strong><a href="https://www.elastic.co/docs/release-notes">release notes</a></strong> and apply updates when they are available. We also recommend users practice least-privilege principals to minimize the prevalence of unnecessary administrator rights and to enable standard mitigations like Secure Boot and Hypervisor-Protected Code Integrity (HVCI). For users of Elastic Defend, no further action is required.</p>
+<p>To confirm we are responsibly assessing this report and providing an unbiased perspective, we are engaging a neutral third-party to review the finding. Elastic will continue to investigate any new reports received and provide updates should we discover any valid security issues.</p>
+<blockquote>
+<p>Updated: August 19, 2025<br>
+Elastic has reviewed additional evidence shared in a blog post on August 19th. Our prior assessment stands. For users of Elastic Defend, no action is required.</p>
+</blockquote>
+<p>On August 16, 2025, Elastic’s Information Security team became aware of a blog and social media posts suggesting an alleged vulnerability in Elastic Defend.</p>
+<p>Having conducted a thorough investigation, Elastic’s Security Engineering team has found no evidence supporting the claims of a vulnerability that bypasses EDR monitoring and enables remote code execution. While the researcher claims to be able to trigger a crash/BSOD in the Elastic Endpoint driver from an unprivileged process, the only demonstration they have provided does so from another kernel driver.</p>
+<p>Elastic will continue to investigate and will provide updates for our customers and community, should we discover any valid security issues. We request that any detailed information that demonstrates the ability to crash the driver from an unprivileged process be shared with us at <a href="mailto:security@elastic.co">security@elastic.co</a>.</p>
+<p><em>Background</em></p>
+<p>Elastic values its partnership with the security community. We lead a mature and proactive bug bounty program, launched in 2017, which has awarded over $600,000 in bounty payments.</p>
+<p>The security researcher making the claim submitted multiple reports to Elastic claiming Remote Code Execution (RCE) and behavior rules bypass for Elastic EDR. The reports lacked evidence of reproducible exploits. Elastic Security Engineering and our bug bounty triage team completed a thorough analysis trying to reproduce these reports and were unable to do so.  Researchers are required to share reproducible proof-of-concepts; however, they declined.</p>
+<p>By not sharing full details and publicly posting, the conduct of this security researcher is contrary to the principles of coordinated disclosure.</p>
+<p>The Elastic Secure Software Development Framework (SSDF) ensures Elastic software is developed securely to minimize the security risks to our customers, Elastic Products, and our software supply chain. The framework is aligned with best practices for secure software development, including NIST SSDF, OWASP SAMM, and BSIMM. Our product security testing program requirements include in-house and third-party testing for Software Composition Analysis (SCA), Static Secure Code Analysis (SAST), Dynamic Application Security Testing (DAST), Third-party Pentesting, Red Team Adversarial Attack Simulation, and other tests.</p>
+<p>Elastic implements procedures to receive, analyze, respond to, and remediate vulnerabilities disclosed to us from all sources. Vulnerability impact assessments are performed to review and validate security findings, determine if Elastic products are affected, rate the severity, and perform remediation in accordance with the impact.</p>
+<p>For issues that have a significant security impact on Elastic products, an Elastic Security Advisory (ESA) is published to notify our users of the issue and remediations. As a CNA, Elastic assigns both a CVE and an ESA identifier to each advisory. Advisories are announced in the <a href="https://discuss.elastic.co/c/announcements/security-announcements">Security Announcements forum</a> and published to Mitre/NVD.</p>
+            <p><small>2 posts - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/elastic-response-to-blog-edr-0-day-vulnerability/381093">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/elastic-response-to-blog-edr-0-day-vulnerability/381093</link>
+          <pubDate>Mon, 18 Aug 2025 02:09:52 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-381093</guid>
+          <source url="https://discuss.elastic.co/t/elastic-response-to-blog-edr-0-day-vulnerability/381093.rss">Elastic Response to Blog ‘EDR 0-Day Vulnerability’</source>
+        </item>
+        <item>
+          <title>Beats (Windows Installer) 8.18.6, 8.19.3, 9.0.6, &amp; 9.1.0 Security Update (ESA-2025-12)</title>
+          <dc:creator><![CDATA[Bryan_Garcia]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <h4><a name="p-1434395-beats-uncontrolled-search-path-element-can-lead-to-local-privilege-escalation-lpe-when-using-the-windows-installer-esa-2025-12-1" class="anchor" href="https://discuss.elastic.co#p-1434395-beats-uncontrolled-search-path-element-can-lead-to-local-privilege-escalation-lpe-when-using-the-windows-installer-esa-2025-12-1"></a>Beats Uncontrolled Search Path Element can lead to Local Privilege Escalation (LPE) when using the Windows Installer (ESA-2025-12)</h4>
+<p>An uncontrolled search path element vulnerability can lead to local privilege Escalation (LPE) via Insecure Directory Permissions. The vulnerability arises from improper handling of directory permissions. An attacker with local access may exploit this flaw to move and delete arbitrary files, potentially gaining SYSTEM privileges.</p>
+<h3><a name="p-1434395-affected-versions-2" class="anchor" href="https://discuss.elastic.co#p-1434395-affected-versions-2"></a>Affected Versions:</h3>
+<p>Beats up to and including <code>8.18.5</code>, from version <code>8.19.0</code> up to and including <code>8.19.2</code>, from version <code>9.0.0</code> up to and including <code>9.0.5</code>.</p>
+<h3><a name="p-1434395-affected-configurations-3" class="anchor" href="https://discuss.elastic.co#p-1434395-affected-configurations-3"></a>Affected Configurations:</h3>
+<p>The issue only affects Beats when installed through the install-service script for Windows. Example when installing <a href="https://www.elastic.co/docs/reference/beats/filebeat/filebeat-installation-configuration#installation">Filebeat </a>using <code>.\install-service-filebeat.ps1</code>.</p>
+<p>Note: Elastic Agent is <strong>NOT</strong> affected because the Beats are installed in a different path <code>C:\Program Files\Elastic\Agent</code></p>
+<h3><a name="p-1434395-solutions-and-mitigations-4" class="anchor" href="https://discuss.elastic.co#p-1434395-solutions-and-mitigations-4"></a>Solutions and Mitigations:</h3>
+<p>The issue is resolved in version 9.1.0.</p>
+<p>A maintenance release will be made available for versions 8.18.6, 8.19.3, and 9.0.6.</p>
+<h3><a name="p-1434395-for-users-that-cannot-upgrade-5" class="anchor" href="https://discuss.elastic.co#p-1434395-for-users-that-cannot-upgrade-5"></a><strong>For Users that Cannot Upgrade:</strong></h3>
+<p>To resolve the issue for users that cannot upgrade, Beats can be uninstalled and re-installed using the install script from a patched version.</p>
+<p>Note: Beats keeps its state in the data path. When re-installing Beats, users need to make sure they have permissions to move the Beats data folder to the new location in <code>C:\Program Files</code>. The new installation script will move the data folder. In the event the script fails, the user will need to manually copy the data folder - this is likely due to permission error.</p>
+<h4><a name="p-1434395-step-by-step-using-filebeat-as-an-example-6" class="anchor" href="https://discuss.elastic.co#p-1434395-step-by-step-using-filebeat-as-an-example-6"></a><strong>Step-by-step using Filebeat as an example:</strong></h4>
+<ol>
+<li>Download the latest Filebeat (e.g. 9.1.1)</li>
+<li>Start a Powershell as administrator</li>
+<li>Stop the Filebeat service: <code>stop-service filebeat</code></li>
+<li>Extract the downloaded filebeat: Expand-Archive <code>.\filebeat-9.1.1-windows-x86_64.zip</code></li>
+<li>Copy the install script onto the current Filebeat installation: <code>cp .\filebeat-9.1.1-windows-x86_64\filebeat-9.1.1-windows-x86_64\install-service-filebeat.ps1 'C:\Program Files\Filebeat\install-service-filebeat.ps1'</code></li>
+<li>Uninstall the Windows service: <code>.\uninstall-service-filebeat.ps1</code></li>
+<li>Re-install using the new script: <code>'C:\Program Files\Filebeat\install-service-filebeat.ps1'</code></li>
+</ol>
+<p><strong>Severity</strong>: CVSSv3.1: 7.0 (High) - CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H</p>
+<p><strong>CVE ID</strong>: CVE-2025-25011</p>
+<p>________________________________________________________________________________________________</p>
+<h3><a name="p-1434395-change-log-7" class="anchor" href="https://discuss.elastic.co#p-1434395-change-log-7"></a>Change log</h3>
+<p>2025-08-21:</p>
+<ul>
+<li>Updated “Affected Verions” to coincide with the maintenance releases</li>
+<li>Updated wording on the “Affected Configurations” to clearly state this is caused by the Windows install script. Stated that Elastic Agent is not affected</li>
+<li>Updated “Solutions and Mitigations” to include the maintenance release versions</li>
+<li>Added section “For Users that Cannot Upgrade” with guidance on how to use the patched install script with an older version of the product</li>
+</ul>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/beats-windows-installer-8-18-6-8-19-3-9-0-6-9-1-0-security-update-esa-2025-12/380558">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/beats-windows-installer-8-18-6-8-19-3-9-0-6-9-1-0-security-update-esa-2025-12/380558</link>
+          <pubDate>Tue, 29 Jul 2025 23:32:46 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-380558</guid>
+          <source url="https://discuss.elastic.co/t/beats-windows-installer-8-18-6-8-19-3-9-0-6-9-1-0-security-update-esa-2025-12/380558.rss">Beats (Windows Installer) 8.18.6, 8.19.3, 9.0.6, &amp; 9.1.0 Security Update (ESA-2025-12)</source>
+        </item>
+        <item>
+          <title>APM Server (Windows Installer) 8.16.3, 8.17.1 Security Update (ESA-2025-01)</title>
+          <dc:creator><![CDATA[Bryan_Garcia]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <h4><a name="p-1434394-apm-server-uncontrolled-search-path-element-can-lead-to-local-privilege-escalation-lpe-when-using-the-windows-installer-esa-2025-01-1" class="anchor" href="https://discuss.elastic.co#p-1434394-apm-server-uncontrolled-search-path-element-can-lead-to-local-privilege-escalation-lpe-when-using-the-windows-installer-esa-2025-01-1"></a>APM Server Uncontrolled Search Path Element can lead to Local Privilege Escalation (LPE) when using the Windows Installer (ESA-2025-01)</h4>
+<p>An uncontrolled search path element vulnerability can lead to local privilege Escalation (LPE) via Insecure Directory Permissions. The vulnerability arises from improper handling of directory permissions. An attacker with local access may exploit this flaw to move and delete arbitrary files, potentially gaining SYSTEM privileges.</p>
+<h3><a name="p-1434394-affected-versions-2" class="anchor" href="https://discuss.elastic.co#p-1434394-affected-versions-2"></a>Affected Versions:</h3>
+<p>APM Server version up to and including 8.16.2, and up to and including 8.17.0.</p>
+<h3><a name="p-1434394-affected-configurations-3" class="anchor" href="https://discuss.elastic.co#p-1434394-affected-configurations-3"></a>Affected Configurations:</h3>
+<p>The issue only affects APM Server when installed through the install-service script for Windows.</p>
+<h3><a name="p-1434394-solutions-and-mitigations-4" class="anchor" href="https://discuss.elastic.co#p-1434394-solutions-and-mitigations-4"></a>Solutions and Mitigations:</h3>
+<p>The issue is resolved in version 8.16.3 and 8.17.1.</p>
+<p><strong>Severity</strong>: CVSSv3.1: 7.0 (High) - CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H</p>
+<p><strong>CVE ID</strong>: CVE-2025-0712</p>
+<p>________________________________________________________________________________________________</p>
+<h3><a name="p-1434394-change-log-5" class="anchor" href="https://discuss.elastic.co#p-1434394-change-log-5"></a>Change log</h3>
+<p>2025-08-21: Updated wording on the “Affected Configurations” to clearly state this is caused by the Windows install script.</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/apm-server-windows-installer-8-16-3-8-17-1-security-update-esa-2025-01/380557">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/apm-server-windows-installer-8-16-3-8-17-1-security-update-esa-2025-01/380557</link>
+          <pubDate>Tue, 29 Jul 2025 23:30:19 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-380557</guid>
+          <source url="https://discuss.elastic.co/t/apm-server-windows-installer-8-16-3-8-17-1-security-update-esa-2025-01/380557.rss">APM Server (Windows Installer) 8.16.3, 8.17.1 Security Update (ESA-2025-01)</source>
+        </item>
+        <item>
+          <title>Kibana 7.17.29, 8.17.8, 8.18.3, 9.0.3 Security Update (ESA-2025-10)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana Open Redirect (ESA-2025-10)</strong></p>
+<p>URL redirection to an untrusted site ('Open Redirect') in Kibana can lead to sending a user to an arbitrary site and server-side request forgery via a specially crafted URL.</p>
+<p><strong>Affected Versions:</strong><br>
+Kibana versions up to and including 7.17.28, 8.0.0 up to and including 8.17.7, 8.18.0 up to and including 8.18.2, and 9.0.0 up to and including 9.0.2</p>
+<p><strong>Affected Configurations:</strong><br>
+Kibana installations making use of Short URLs within the Discover, Dashboard, and Visualization Library features.</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+The issue is resolved in version 7.17.29, 8.17.8, or 8.18.3, or 9.0.3.</p>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p><strong>Self-hosted</strong><br>
+Installations with a Basic license should have administrators restrict access to Kibana features which grant the ability to generate Short URLs:</p>
+<ul>
+<li>Dashboard =&gt; All</li>
+<li>Discover =&gt; All</li>
+<li>Visualize =&gt;All</li>
+<li>Saved Objects Management =&gt; All</li>
+<li>Top-level “All” privilege granted to one or more spaces</li>
+</ul>
+<p>Installations with a Gold, Platinum, or Enterprise license can restrict access to short-url creation via sub-feature privileges within the Dashboard, Discover, and Visualize features above. This will allow administrators to continue allowing read/write access to the aforementioned features, but restrict the ability to generate Short URLs.</p>
+<p><strong>Cloud</strong><br>
+Administrators should restrict access to Kibana features which grant the ability to generate Short URLs:</p>
+<ul>
+<li>Dashboard =&gt; All</li>
+<li>Discover =&gt; All</li>
+<li>Visualize =&gt;All</li>
+<li>Saved Objects Management =&gt; All</li>
+<li>Top-level “All” privilege granted to one or more spaces</li>
+</ul>
+<p>Administrators can optionally restrict access to short-url creation via sub-feature privileges within the Dashboard, Discover, and Visualize features above. This will permit read/write access to the aforementioned features, but restrict the ability to generate Short URLs.</p>
+<p><strong>Severity:</strong> CVSSv3.1: 4.3 (Medium) - CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N<br>
+<strong>CVE ID</strong>: CVE-2025-25012</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-7-17-29-8-17-8-8-18-3-9-0-3-security-update-esa-2025-10/379444">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-7-17-29-8-17-8-8-18-3-9-0-3-security-update-esa-2025-10/379444</link>
+          <pubDate>Tue, 24 Jun 2025 17:01:48 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-379444</guid>
+          <source url="https://discuss.elastic.co/t/kibana-7-17-29-8-17-8-8-18-3-9-0-3-security-update-esa-2025-10/379444.rss">Kibana 7.17.29, 8.17.8, 8.18.3, 9.0.3 Security Update (ESA-2025-10)</source>
+        </item>
+        <item>
+          <title>Kibana 7.17.29, 8.17.8, 8.18.3, 9.0.3 Security Update (ESA-2025-09)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana Heap Corruption via Crafted HTML Page due to Chromium Type Confusion (ESA-2025-09)</strong></p>
+<p>On March 10, 2025, Google announced CVE-2025-2135, which can lead to heap corruption via a crafted HTML page through a Type Confusion vulnerability.</p>
+<p><strong>Affected Versions:</strong><br>
+Kibana versions up to and including 7.17.28, 8.0.0 up to and including 8.17.7, 8.18.0 up to and including 8.18.2, and 9.0.0 up to and including 9.0.2</p>
+<p><strong>Affected Configurations:</strong><br>
+Self-hosted and Elastic Cloud Kibana instances where PDF or PNG reporting is used. CSV reporting is not impacted. Serverless projects are not impacted.</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+Users should upgrade to version 7.17.29, 8.17.8, or 8.18.3, or 9.0.3.</p>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p><strong>Self-hosted</strong></p>
+<ol>
+<li>Disable Reporting:<br>
+The Reporting feature can be disabled by adding <code>xpack.reporting.enabled: false</code> to the <code>kibana.yml</code> file.</li>
+</ol>
+<p>OR</p>
+<ol start="2">
+<li>Limit access to users who can generate PDF/PNG reports to trusted accounts:
+<ol>
+<li>8.x: <a href="https://www.elastic.co/guide/en/kibana/8.18/reporting-settings-kb.html#reporting-advanced-settings">https://www.elastic.co/guide/en/kibana/8.18/reporting-settings-kb.html#reporting-advanced-settings</a></li>
+<li>9.x: <a href="https://www.elastic.co/docs/deploy-manage/kibana-reporting-configuration#grant-user-access">https://www.elastic.co/docs/deploy-manage/kibana-reporting-configuration#grant-user-access</a></li>
+</ol>
+</li>
+</ol>
+<p>OR</p>
+<ol start="3">
+<li>Configure reporting with a restrictive <a href="https://www.elastic.co/guide/en/kibana/8.18/reporting-settings-kb.html#reporting-network-policy">network policy</a>, to prevent unauthorized redirection to an attacker-controlled site:<br>
+If a network policy is configured.<br>
+Note: if a network policy is configured, then you must include a rule which allows Chromium to connect to Kibana for report generation to succeed. Typically, Chromium will connect to Kibana on a local interface, but may be different based on the environment and your specific <a href="https://www.elastic.co/guide/en/kibana/8.18/reporting-settings-kb.html#reporting-kibana-server-settings">headless browser connection settings</a>.</li>
+</ol>
+<pre><code class="lang-auto"># kibana.yml
+xpack.screenshotting.networkPolicy:
+  rules: [ { allow: true, host: "localhost:5601" } ]
+</code></pre>
+<p><strong>Cloud</strong><br>
+On Elastic Cloud the code execution is limited within the Kibana Docker container. Further exploitation such as container escape is prevented by <code>seccomp-bpf</code> and <code>AppArmor</code> profiles. With these counter-measures the risk is reduced.</p>
+<p>Users who cannot upgrade can choose to take a precautionary measure by</p>
+<ol>
+<li>Disabling the Reporting feature for Elastic Cloud deployments. This can be achieved by modifying the Kibana user settings to include the following configuration:</li>
+</ol>
+<ul>
+<li>
+<p><code>xpack.reporting.enabled: false</code></p>
+</li>
+<li>
+<p>Instructions for editing Kibana user settings on Elastic Cloud are available at <a href="https://www.elastic.co/docs/deploy-manage/deploy/elastic-cloud/edit-stack-settings#kibana-settings">https://www.elastic.co/docs/deploy-manage/deploy/elastic-cloud/edit-stack-settings#kibana-settings</a></p>
+</li>
+</ul>
+<p>OR</p>
+<ol start="2">
+<li>Limit access to users who can generate PDF/PNG reports to trusted accounts:<br>
+a. 8.x: <a href="https://www.elastic.co/guide/en/kibana/8.18/reporting-settings-kb.html#reporting-advanced-settings">https://www.elastic.co/guide/en/kibana/8.18/reporting-settings-kb.html#reporting-advanced-settings</a><br>
+b. 9.x: <a href="https://www.elastic.co/docs/deploy-manage/kibana-reporting-configuration#grant-user-access">https://www.elastic.co/docs/deploy-manage/kibana-reporting-configuration#grant-user-access</a></li>
+</ol>
+<p><strong>Severity:</strong> CVSSv3.1: 9.9 (Critical) - CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H<br>
+<strong>CVE ID</strong>: CVE-2025-2135</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-7-17-29-8-17-8-8-18-3-9-0-3-security-update-esa-2025-09/379443">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-7-17-29-8-17-8-8-18-3-9-0-3-security-update-esa-2025-09/379443</link>
+          <pubDate>Tue, 24 Jun 2025 17:00:12 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-379443</guid>
+          <source url="https://discuss.elastic.co/t/kibana-7-17-29-8-17-8-8-18-3-9-0-3-security-update-esa-2025-09/379443.rss">Kibana 7.17.29, 8.17.8, 8.18.3, 9.0.3 Security Update (ESA-2025-09)</source>
+        </item>
+        <item>
+          <title>Kibana 8.12.1 Security Update (ESA-2024-21)</title>
+          <dc:creator><![CDATA[rodrigo_silva]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana Improper Authorization (ESA-2024-21)</strong></p>
+<p>Improper authorization in Kibana can lead to privilege abuse via a direct HTTP request to a Synthetic monitor endpoint.</p>
+<p><strong>Affected Versions:</strong></p>
+<p>Kibana versions before and including 8.12.0.</p>
+<p><strong>Solutions and Mitigations:</strong></p>
+<p>The issue is resolved in versions 8.12.1.</p>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p>Self-hosted:<br>
+Users with a self-hosted deployment who cannot upgrade can disable the synthetics app OR put a block on synthetics indices.</p>
+<ol>
+<li>Disable the synthetics by adding <code>xpack.uptime.enabled: false</code> to their <code>kibana.yml</code> file</li>
+<li>Put an index block on the synthetics-* indices to make them read-only <a href="https://www.elastic.co/docs/reference/elasticsearch/index-settings/index-block">see</a></li>
+</ol>
+<p>Elastic Cloud:<br>
+Users on an Elastic Cloud deployment who cannot upgrade can put a block on synthetics indices</p>
+<ol>
+<li>Put an index block on the synthetics-* indices to make them read-only <a href="https://www.elastic.co/docs/reference/elasticsearch/index-settings/index-block">see</a></li>
+</ol>
+<p><strong>Severity</strong>: High (7.6) - CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L/CR:M/IR:M/AR:M<br>
+<strong>CVE ID</strong>: CVE-2024-43706</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-8-12-1-security-update-esa-2024-21/379064">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-8-12-1-security-update-esa-2024-21/379064</link>
+          <pubDate>Tue, 10 Jun 2025 16:48:27 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-379064</guid>
+          <source url="https://discuss.elastic.co/t/kibana-8-12-1-security-update-esa-2024-21/379064.rss">Kibana 8.12.1 Security Update (ESA-2024-21)</source>
+        </item>
+        <item>
+          <title>Logstash 8.17.6, 8.18.1, and 9.0.1 Security Update (ESA-2025-08)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Logstash Improper Certificate Validation in TCP output (ESA-2025-08)</strong></p>
+<p>Improper certificate validation in Logstash's TCP output could lead to a man-in-the-middle (MitM) attack in “client” mode, as hostname verification in TCP output was not being performed when the <code>ssl_verification_mode =&gt; full</code> was set.</p>
+<p><strong>Affected Versions:</strong><br>
+All versions prior to 8.17.6, as well as version 8.18.0 and version 9.0.0.</p>
+<p><strong>Affected Configurations:</strong><br>
+This issue affects the TCP output plugin when run in “client” mode and <code>ssl_verification_mode =&gt; full</code> is set to <code>full</code> (the default).</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+The issue is resolved in version 8.17.6, 8.18.1, and 9.0.1.</p>
+<p>Alternatively, users may also upgrade the TCP output plugin to 6.2.2 or 7.0.1 by running <code>bin/logstash-plugin update logstash-output-tcp</code>.</p>
+<p><strong>Severity:</strong> CVSSv3.1: 5.9 (Medium) - <a href="https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N">CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N</a><br>
+<strong>CVE ID:</strong> CVE-2025-37730</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/logstash-8-17-6-8-18-1-and-9-0-1-security-update-esa-2025-08/377869">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/logstash-8-17-6-8-18-1-and-9-0-1-security-update-esa-2025-08/377869</link>
+          <pubDate>Tue, 06 May 2025 16:33:44 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-377869</guid>
+          <source url="https://discuss.elastic.co/t/logstash-8-17-6-8-18-1-and-9-0-1-security-update-esa-2025-08/377869.rss">Logstash 8.17.6, 8.18.1, and 9.0.1 Security Update (ESA-2025-08)</source>
+        </item>
+        <item>
+          <title>Kibana 8.17.6, 8.18.1, or 9.0.1 Security Update (ESA-2025-07)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana arbitrary code execution via prototype pollution (ESA-2025-07)</strong><br>
+A Prototype pollution vulnerability in Kibana leads to arbitrary code execution via crafted HTTP requests to machine learning and reporting endpoints.</p>
+<p><strong>Affected Versions:</strong><br>
+8.3.0 to 8.17.5, and 8.18.0, and 9.0.0</p>
+<p><strong>Affected Configurations:</strong><br>
+Self-hosted and Elastic Cloud deployments with both Kibana’s Machine Learning and Reporting features enabled.</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+Users should upgrade to version 8.17.6, 8.18.1, or 9.0.1.</p>
+<p><strong>For Users that Cannot Upgrade:</strong></p>
+<p><strong>Self-hosted</strong></p>
+<p>Users with a self-hosted deployment who cannot upgrade should disable either Machine Learning <strong>OR</strong> Reporting.</p>
+<ol>
+<li>Disable Machine Learning:<br>
+The Machine Learning feature can be disabled by adding <code>xpack.ml.enabled: false</code> to the <code>elasticsearch.yml</code> file.<br>
+Alternatively, users can disable just the anomaly detection feature by adding <code>xpack.ml.ad.enabled: false</code> to the <code>kibana.yml</code> file.</li>
+</ol>
+<p>OR</p>
+<ol start="2">
+<li>Disable Reporting:<br>
+The Reporting feature can be disabled by adding <code>xpack.reporting.enabled: false</code> to the <code>kibana.yml</code> file.</li>
+</ol>
+<p><strong>Elastic Cloud</strong></p>
+<p>On Elastic Cloud the code execution is limited within the Kibana Docker container. Further exploitation such as container escape is prevented by <code>seccomp-bpf</code> and <code>AppArmor</code> profiles. With these counter-measures the risk is reduced.</p>
+<p>Users who cannot upgrade can choose to take a further measure by disabling the "Reporting" feature for Elastic Cloud deployments. This can be achieved by modifying the Kibana user settings to include the following configuration:</p>
+<p><code>xpack.reporting.enabled: false</code></p>
+<p>Instructions for editing Kibana user settings on Elastic Cloud are available at <a href="https://www.elastic.co/docs/deploy-manage/deploy/elastic-cloud/edit-stack-settings#kibana-settings">https://www.elastic.co/docs/deploy-manage/deploy/elastic-cloud/edit-stack-settings#kibana-settings</a></p>
+<p><strong>Severity:</strong> CVSSv3.1: 9.1 (Critical) - CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H<br>
+<strong>CVE ID:</strong> CVE-2025-25014</p>
+<hr>
+<p><strong>Changes</strong></p>
+<ul>
+<li>
+<p><strong>2025-05-14:</strong> Created separate sections for self-hosted and Elastic Cloud under the section "<strong>For Users that Cannot Upgrade:</strong>". Clarification on what counter-measures are in place for Elastic Cloud hosted deployments and made clear what configuration changes  can be achieved based on deployment.</p>
+</li>
+<li>
+<p><strong>2025-05-08:</strong> Previously the document stated that <code>xpack.ml.enabled: false</code> is set in the <code>kibana.yml</code> file however, this should have read <code>elasticsearch.yml</code>. The document has been updated accordingly.</p>
+</li>
+</ul>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-8-17-6-8-18-1-or-9-0-1-security-update-esa-2025-07/377868">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-8-17-6-8-18-1-or-9-0-1-security-update-esa-2025-07/377868</link>
+          <pubDate>Tue, 06 May 2025 16:29:27 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-377868</guid>
+          <source url="https://discuss.elastic.co/t/kibana-8-17-6-8-18-1-or-9-0-1-security-update-esa-2025-07/377868.rss">Kibana 8.17.6, 8.18.1, or 9.0.1 Security Update (ESA-2025-07)</source>
+        </item>
+        <item>
+          <title>Kibana 7.17.24 and 8.12.0 Security Update (ESA-2024-20)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana Unrestricted Upload of File with Dangerous Type Can Lead to XSS (ESA-2024-20)</strong></p>
+<p>Unrestricted upload of a file with dangerous type in Kibana can lead to arbitrary JavaScript execution in a victim’s browser (XSS) via crafted HTML and JavaScript files.</p>
+<p>The attacker must have access to the Synthetics app AND/OR have access to write to the synthetics indices.</p>
+<p><strong>Affected Versions:</strong><br>
+7.17.6 up to and including 7.17.23 and 8.4.0 up to and including 8.11.4</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+The issue is resolved in Kibana 7.17.24 and 8.12.0</p>
+<p><strong>Severity:</strong> CVSSv3: 5.4 (Medium) - <a href="https://www.first.org/cvss/calculator/3-0#">CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N</a><br>
+<strong>CVE ID:</strong> CVE-2024-11390</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-7-17-24-and-8-12-0-security-update-esa-2024-20/377712">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-7-17-24-and-8-12-0-security-update-esa-2024-20/377712</link>
+          <pubDate>Thu, 01 May 2025 11:34:46 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-377712</guid>
+          <source url="https://discuss.elastic.co/t/kibana-7-17-24-and-8-12-0-security-update-esa-2024-20/377712.rss">Kibana 7.17.24 and 8.12.0 Security Update (ESA-2024-20)</source>
+        </item>
+        <item>
+          <title>Kibana 7.17.19 and 8.13.0 Security Update (ESA-2024-47)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Kibana Unrestricted Upload of File (ESA-2024-47)</strong></p>
+<p>Unrestricted file upload in Kibana allows an authenticated attacker to compromise software integrity by uploading a crafted malicious file due to insufficient server-side validation.</p>
+<p><strong>Affected Versions:</strong><br>
+7.17.0 to 7.17.18 and 8.0.0 to 8.12.3</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+The issue is resolved in version 7.17.19 or higher, and 8.13.0 or higher.</p>
+<p><strong>Severity:</strong> CVSSv3.1: 4.3 (Medium) - CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N<br>
+<strong>CVE ID:</strong> CVE-2025-25016</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/kibana-7-17-19-and-8-13-0-security-update-esa-2024-47/377711">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/kibana-7-17-19-and-8-13-0-security-update-esa-2024-47/377711</link>
+          <pubDate>Thu, 01 May 2025 10:15:05 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-377711</guid>
+          <source url="https://discuss.elastic.co/t/kibana-7-17-19-and-8-13-0-security-update-esa-2024-47/377711.rss">Kibana 7.17.19 and 8.13.0 Security Update (ESA-2024-47)</source>
+        </item>
+        <item>
+          <title>APM Server 8.16.1 Security Update (ESA-2024-41)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p>APM Server Insertion of Sensitive Information into Log File (ESA-2024-41)</p>
+<p>APM server logs could contain parts of the document body from a partially failed bulk index request. Depending on the nature of the document, this could disclose sensitive information in APM Server error logs.</p>
+<p><strong>Affected Versions:</strong><br>
+APM Server versions &gt; 8.0.0 and &lt; 8.16.1</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+The issue is resolved in version 8.16.1</p>
+<p><strong>Severity:</strong> CVSSv3: 5.7(Medium) - AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N<br>
+<strong>CVE ID:</strong> CVE-2024-11994</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/apm-server-8-16-1-security-update-esa-2024-41/377710">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/apm-server-8-16-1-security-update-esa-2024-41/377710</link>
+          <pubDate>Thu, 01 May 2025 10:14:04 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-377710</guid>
+          <source url="https://discuss.elastic.co/t/apm-server-8-16-1-security-update-esa-2024-41/377710.rss">APM Server 8.16.1 Security Update (ESA-2024-41)</source>
+        </item>
+        <item>
+          <title>Elasticsearch 7.17.25 and 8.16.0 Security Update (ESA-2024-40)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Elasticsearch Uncontrolled Resource Consumption vulnerability(ESA-2024-40)</strong></p>
+<p>Uncontrolled Resource Consumption in Elasticsearch while evaluating specifically crafted search templates with Mustache functions can lead to Denial of Service by causing  the Elasticsearch node to crash.</p>
+<p><strong>Affected Versions:</strong><br>
+Elasticsearch versions &lt; 7.17.25 and Elasticsearch versions &lt; 8.16.0</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+The issue is resolved in versions 7.17.25 and 8.16.0</p>
+<p><strong>Severity:</strong> CVSSv3.1: 6.5 (Medium) AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H<br>
+<strong>CVE ID:</strong> CVE-2024-52979</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/elasticsearch-7-17-25-and-8-16-0-security-update-esa-2024-40/377709">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/elasticsearch-7-17-25-and-8-16-0-security-update-esa-2024-40/377709</link>
+          <pubDate>Thu, 01 May 2025 10:13:22 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-377709</guid>
+          <source url="https://discuss.elastic.co/t/elasticsearch-7-17-25-and-8-16-0-security-update-esa-2024-40/377709.rss">Elasticsearch 7.17.25 and 8.16.0 Security Update (ESA-2024-40)</source>
+        </item>
+        <item>
+          <title>Elastic Agent 7.17.25 and 8.15.4 Security Update (ESA-2024-39)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Elastic Agent Inclusion of Functionality from Untrusted Control Sphere (ESA-2024-39)</strong></p>
+<p>Inclusion of functionality from an untrusted control sphere in Elastic Agent subprocess, osqueryd, allows local attackers to execute arbitrary code via parameter injection.</p>
+<p>An attacker requires local access and the ability to modify osqueryd configurations.</p>
+<p><strong>Affected Versions:</strong><br>
+Elastic Agent &lt;= 7.17.24 and Elastic Agent &lt;= 8.15.3</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+The issue is resolved in version 7.17.25 and 8.15.4 or greater.</p>
+<p><strong>Severity:</strong> CVSSv3.1: 4.4 (Medium) - CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:N}<br>
+<strong>CVE ID:</strong> CVE-2024-52976</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/elastic-agent-7-17-25-and-8-15-4-security-update-esa-2024-39/377708">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/elastic-agent-7-17-25-and-8-15-4-security-update-esa-2024-39/377708</link>
+          <pubDate>Thu, 01 May 2025 10:11:54 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-377708</guid>
+          <source url="https://discuss.elastic.co/t/elastic-agent-7-17-25-and-8-15-4-security-update-esa-2024-39/377708.rss">Elastic Agent 7.17.25 and 8.15.4 Security Update (ESA-2024-39)</source>
+        </item>
+        <item>
+          <title>Logstash 8.15.3 Security Update (ESA-2024-38)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Logstash affected by CVE-2024-47561 in Apache Avro (ESA-2024-38)</strong></p>
+<p>On October 3, 2024, CVE-2024-47561 was published, which can lead to execution of arbitrary code.</p>
+<p>The issue only affects users using the Kafka integration plugin and only if a malicious schema is loaded through the schema registry. Additionally both the Kafka input and output plugins are also vulnerable if a user created Serializer/Deserializer classes that takes an Avro Schema</p>
+<p><strong>Affected Versions:</strong><br>
+&lt;= 8.15.2</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+Users should upgrade to Logstash version 8.15.3 where Apache Avro has been updated to version 11.5.2.</p>
+<p><strong>For Users that Cannot Upgrade:</strong><br>
+Users can manually upgrade the logstash-integration-kafka plugin to 11.5.2</p>
+<p><strong>Severity:</strong> CVSSv3.1: 7.2 (High) - <a href="https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H">CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H </a><br>
+<strong>CVE ID:</strong> CVE-2024-47561</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/logstash-8-15-3-security-update-esa-2024-38/377707">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/logstash-8-15-3-security-update-esa-2024-38/377707</link>
+          <pubDate>Thu, 01 May 2025 10:10:01 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-377707</guid>
+          <source url="https://discuss.elastic.co/t/logstash-8-15-3-security-update-esa-2024-38/377707.rss">Logstash 8.15.3 Security Update (ESA-2024-38)</source>
+        </item>
+        <item>
+          <title>Elastic Agent / Elastic Endpoint Security Security Update (ESA-2025-03)</title>
+          <dc:creator><![CDATA[ismisepaul]]></dc:creator>
+          <category>Security Announcements</category>
+          <description><![CDATA[
+            <p><strong>Elastic Agent / Elastic Endpoint Security local API key disclosure (ESA-2025-03)</strong></p>
+<p>Exposure of sensitive information to local unauthorized actors in Elastic Agent and Elastic Security Endpoint can lead to loss of confidentiality and impersonation of Endpoint to the Elastic Stack. This issue was identified by Elastic engineers and Elastic has no indication that it is known or has been exploited by malicious actors.</p>
+<p><strong>Affected Versions:</strong><br>
+Elastic Agent and Elastic Endpoint Security versions &lt; 8.15.0</p>
+<p><strong>Solutions and Mitigations:</strong><br>
+The issue is resolved in version 8.15.0.</p>
+<p><strong>Severity:</strong> CVSSv3.1: 6.2 (Medium) - AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N<br>
+<strong>CVE ID:</strong> CVE-2023-46669</p>
+            <p><small>1 post - 1 participant</small></p>
+            <p><a href="https://discuss.elastic.co/t/elastic-agent-elastic-endpoint-security-security-update-esa-2025-03/377706">Read full topic</a></p>
+          ]]></description>
+          <link>https://discuss.elastic.co/t/elastic-agent-elastic-endpoint-security-security-update-esa-2025-03/377706</link>
+          <pubDate>Thu, 01 May 2025 10:06:44 +0000</pubDate>
+          <discourse:topicPinned>No</discourse:topicPinned>
+          <discourse:topicClosed>No</discourse:topicClosed>
+          <discourse:topicArchived>No</discourse:topicArchived>
+          <guid isPermaLink="false">discuss.elastic.co-topic-377706</guid>
+          <source url="https://discuss.elastic.co/t/elastic-agent-elastic-endpoint-security-security-update-esa-2025-03/377706.rss">Elastic Agent / Elastic Endpoint Security Security Update (ESA-2025-03)</source>
+        </item>
+  </channel>
+</rss>

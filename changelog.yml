@@ -1,0 +1,31 @@
+# newer versions go on top
+- version: "0.0.99"
+  changes:
+    - description: enhance integration
+      type: enhancement
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2 
+- version: "0.0.43"
+  changes:
+    - description: add security alert rule for ESA vulnerabilities
+      type: enhancement
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2 
+- version: "0.0.41"
+  changes:
+    - description: add security alert rule for ESA vulnerabilities
+      type: enhancement
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2 
+- version: "0.0.29"
+  changes:
+    - description: fix cursor issue + vulnerability.description shortening
+      type: enhancement
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2 
+- version: "0.0.28"
+  changes:
+    - description: add cursor settings in cel program to avoid duplicate events
+      type: enhancement
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/1 
+- version: "0.0.27"
+  changes:
+    - description: Initial draft of the package
+      type: enhancement
+      link: https://github.com/elastic/integrations/pull/1 

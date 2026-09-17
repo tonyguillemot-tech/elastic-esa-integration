@@ -2,6 +2,29 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Add preserve_original_event support: new boolean toggle preserves raw
+        event in event.original field; pipeline removes it by default unless
+        the preserve_original_event tag is set
+      type: enhancement
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
+        Clean up manifest variable titles: remove "Resource" prefix from UI
+        labels; "Resource Timeout" becomes "HTTP Client Timeout", "Resource
+        Proxy" becomes "Proxy URL", "Resource SSL Configuration" becomes
+        "SSL Configuration", etc.
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
+        Restore input.type field definition in base-fields.yml; CEL input
+        always sets this field and it must be declared for system test validation
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
+        Fix ECS reference from v8.12.0 (non-existent) to v8.11.0; align
+        ecs.version in ingest pipeline accordingly
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
         Add _dev/build/build.yml to resolve ECS external field references,
         fix base-fields.yml ECS alignment, correct pipeline vulnerability.enumeration
         condition, add ignore_missing on optional RSS field renames, fix on_failure

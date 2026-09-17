@@ -1,7 +1,7 @@
 format_version: 3.5.0
 name: esa
 title: "Elastic Security Advisories"
-version: 0.0.99
+version: 0.1.0
 source:
   license: "Elastic-2.0"
 description: >

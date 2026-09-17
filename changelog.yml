@@ -1,4 +1,17 @@
 # newer versions go on top
+- version: "0.1.0"
+  changes:
+    - description: >
+        Add _dev/build/build.yml to resolve ECS external field references,
+        fix base-fields.yml ECS alignment, correct pipeline vulnerability.enumeration
+        condition, add ignore_missing on optional RSS field renames, fix on_failure
+        processor order and add tags to all processors, align CEL template variable
+        names with manifest declarations, wire retry/redirect/rate_limit vars,
+        add want_more on all CEL branches, use now global variable, add
+        event.original encoding, declare redact.fields, fix kibana version
+        constraint to support 8.x and 9.x, update README placeholder
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
 - version: "0.0.99"
   changes:
     - description: enhance integration

@@ -60,7 +60,10 @@ For help with Elastic ingest tools, check [Common problems](https://www.elastic.
 
 ### vulnerability
 
-The `vulnerability` data stream provides events from `Elastic Security Advisories` Feeds of the following types: {list types}.
+The `vulnerability` data stream collects Elastic Security Advisories from the official
+[Security Announcements RSS feed](https://discuss.elastic.co/c/announcements/security-announcements).
+Each advisory is parsed into a structured vulnerability event with ESA and CVE identifiers,
+affected products and versions, CVSS severity, and remediation steps.
 
 
 #### vulnerability fields

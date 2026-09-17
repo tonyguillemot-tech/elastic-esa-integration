@@ -2,6 +2,16 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Add full historical backfill via RSS pagination: on first start the CEL
+        program iterates through all ?page=N pages (want_more=true) until an
+        empty page signals the end, then switches to ongoing polling on page 0
+        filtered by cursor date; replaces broken grok CVSS patterns (4 patterns
+        failing on 24/25 docs due to Java regex not crossing newlines) with a
+        single validated pattern using %{SPACE} as newline separator; add
+        CWE/CAPEC/CVSS vector field extraction
+      type: enhancement
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
         Add preserve_original_event support: new boolean toggle preserves raw
         event in event.original field; pipeline removes it by default unless
         the preserve_original_event tag is set

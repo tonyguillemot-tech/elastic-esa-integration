@@ -2,6 +2,16 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Fix CEL type error: cast cursor.page to int on read to avoid
+        double+int overload when paginating the RSS backfill
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
+        Add initial_interval parameter (default 8760h) to limit RSS backfill
+        depth; pagination stops when a page contains items older than the interval
+      type: enhancement
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
         Add full historical backfill via RSS pagination: on first start the CEL
         program iterates through all ?page=N pages (want_more=true) until an
         empty page signals the end, then switches to ongoing polling on page 0

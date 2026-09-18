@@ -2,6 +2,14 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Fix vulnerability.description extraction: grok anchored to ESA-YYYY-NN)
+        to prevent false matches at (CAPEC-197) or other closing parens;
+        Painless script now uses regex to locate the ESA ID, cuts at Severity:/
+        Problem Type:/Impact: sections (not just Affected Versions), and runs
+        also when vulnerability.description is empty string
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
         Fix CEL type error: cast cursor.page to int on read to avoid
         double+int overload when paginating the RSS backfill
       type: bugfix

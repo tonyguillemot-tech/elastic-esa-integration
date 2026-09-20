@@ -2,6 +2,13 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Fix initial_interval not applied on backfill restart: value was read
+        from the CEL checkpoint state (first-run cached value) instead of the
+        live config; now injected as a Handlebars literal directly into the
+        CEL program source so changing the variable in Fleet takes effect immediately
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
         Fix CVSS extraction for 2025 advisories: add inverted-order grok pattern
         (CVSSv3.1: 7.0 (High) instead of CVSSv3.1: High ( 7.0 )); clean trailing
         stray brace from esa.vulnerability.cvss_vector via gsub

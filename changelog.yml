@@ -2,6 +2,14 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Extend CWE and CAPEC extraction: fix end-of-document case by replacing
+        mandatory \n with (\n|$) anchor; add narrative fallback pattern
+        '(CWE-NNN)' / '(CAPEC-NNN)' covering ~40 advisories where the
+        identifier appears inline in the description text; reconstruct IDs
+        via set processors from _tmp.cwe_num / _tmp.capec_num
+      type: enhancement
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
         Fix CVSS extraction for 6 additional advisories: replace CVSSv with
         CVSS%{SPACE}v to handle 'CVSS v3.1' (space before version) in ESA-2024-34
         to -37; add pattern with optional parentheses for ESA-2024-24 (no parens);

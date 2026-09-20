@@ -2,6 +2,12 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Fix CVSS extraction for 2025 advisories: add inverted-order grok pattern
+        (CVSSv3.1: 7.0 (High) instead of CVSSv3.1: High ( 7.0 )); clean trailing
+        stray brace from esa.vulnerability.cvss_vector via gsub
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
         Fix vulnerability.description extraction: when no ESA ID is present in
         the description body, skip the title paragraph by seeking the first
         double newline; reorder section markers so Affected Versions is checked

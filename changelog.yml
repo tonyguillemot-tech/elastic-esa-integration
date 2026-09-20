@@ -2,6 +2,15 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Fix CVSS extraction for 6 additional advisories: replace CVSSv with
+        CVSS%{SPACE}v to handle 'CVSS v3.1' (space before version) in ESA-2024-34
+        to -37; add pattern with optional parentheses for ESA-2024-24 (no parens);
+        add pattern without CVSS prefix for ESA-2024-21 (Severity: High (7.6));
+        drop non-ESA advisory topics (no ESA-YYYY-NN in title) to exclude
+        situation reports and CVSS v4.0 announcements
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+    - description: >
         Fix initial_interval not applied on backfill restart: value was read
         from the CEL checkpoint state (first-run cached value) instead of the
         live config; now injected as a Handlebars literal directly into the

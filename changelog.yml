@@ -2,11 +2,12 @@
 - version: "0.1.0"
   changes:
     - description: >
-        Extend CWE and CAPEC extraction: fix end-of-document case by replacing
-        mandatory \n with (\n|$) anchor; add narrative fallback pattern
-        '(CWE-NNN)' / '(CAPEC-NNN)' covering ~40 advisories where the
-        identifier appears inline in the description text; reconstruct IDs
-        via set processors from _tmp.cwe_num / _tmp.capec_num
+        Extend CWE and CAPEC extraction to arrays: replace grok+set processors
+        with Painless scripts that extract all CWE-NNN and CAPEC-NNN entries
+        into keyword arrays; structured format (Problem Type / Impact sections)
+        captures id+name pairs for each entry; narrative fallback collects all
+        (CWE-NNN)/(CAPEC-NNN) occurrences; fixes end-of-document case via
+        indexOf+substring instead of grok anchor
       type: enhancement
       link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
     - description: >

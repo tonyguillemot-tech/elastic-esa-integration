@@ -2,6 +2,15 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Fix CVSS vector extraction for 10 advisories writing the vector without
+        the CVSS: prefix (e.g. "Severity: High (7.6) - AV:N/..." instead of
+        "- CVSS:3.1/AV:N/..."): anchor grok on AV:[NALP]/ with optional CVSS:ver/
+        prefix capture; reconstruct esa.vulnerability.cvss_vector as ver/body using
+        inline version first, score.version as fallback; backfill score.version from
+        inline version when not extracted by CVSS grok (ESA-2024-21 pattern)
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
+    - description: >
         Extend CWE and CAPEC extraction to arrays: replace grok+set processors
         with Painless scripts that extract all CWE-NNN and CAPEC-NNN entries
         into keyword arrays; structured format (Problem Type / Impact sections)
@@ -9,7 +18,7 @@
         (CWE-NNN)/(CAPEC-NNN) occurrences; fixes end-of-document case via
         indexOf+substring instead of grok anchor
       type: enhancement
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Fix CVSS extraction for 6 additional advisories: replace CVSSv with
         CVSS%{SPACE}v to handle 'CVSS v3.1' (space before version) in ESA-2024-34
@@ -18,20 +27,20 @@
         drop non-ESA advisory topics (no ESA-YYYY-NN in title) to exclude
         situation reports and CVSS v4.0 announcements
       type: bugfix
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Fix initial_interval not applied on backfill restart: value was read
         from the CEL checkpoint state (first-run cached value) instead of the
         live config; now injected as a Handlebars literal directly into the
         CEL program source so changing the variable in Fleet takes effect immediately
       type: bugfix
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Fix CVSS extraction for 2025 advisories: add inverted-order grok pattern
         (CVSSv3.1: 7.0 (High) instead of CVSSv3.1: High ( 7.0 )); clean trailing
         stray brace from esa.vulnerability.cvss_vector via gsub
       type: bugfix
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Fix vulnerability.description extraction: when no ESA ID is present in
         the description body, skip the title paragraph by seeking the first
@@ -39,17 +48,17 @@
         before Severity (which appears later in the text); grok anchored to
         ESA-YYYY-NN) to prevent false matches at (CAPEC-NNN) closing parens
       type: bugfix
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Fix CEL type error: cast cursor.page to int on read to avoid
         double+int overload when paginating the RSS backfill
       type: bugfix
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Add initial_interval parameter (default 8760h) to limit RSS backfill
         depth; pagination stops when a page contains items older than the interval
       type: enhancement
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Add full historical backfill via RSS pagination: on first start the CEL
         program iterates through all ?page=N pages (want_more=true) until an
@@ -59,30 +68,30 @@
         single validated pattern using %{SPACE} as newline separator; add
         CWE/CAPEC/CVSS vector field extraction
       type: enhancement
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Add preserve_original_event support: new boolean toggle preserves raw
         event in event.original field; pipeline removes it by default unless
         the preserve_original_event tag is set
       type: enhancement
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Clean up manifest variable titles: remove "Resource" prefix from UI
         labels; "Resource Timeout" becomes "HTTP Client Timeout", "Resource
         Proxy" becomes "Proxy URL", "Resource SSL Configuration" becomes
         "SSL Configuration", etc.
       type: bugfix
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Restore input.type field definition in base-fields.yml; CEL input
         always sets this field and it must be declared for system test validation
       type: bugfix
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Fix ECS reference from v8.12.0 (non-existent) to v8.11.0; align
         ecs.version in ingest pipeline accordingly
       type: bugfix
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
         Add _dev/build/build.yml to resolve ECS external field references,
         fix base-fields.yml ECS alignment, correct pipeline vulnerability.enumeration
@@ -93,32 +102,32 @@
         event.original encoding, declare redact.fields, fix kibana version
         constraint to support 8.x and 9.x, update README placeholder
       type: bugfix
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
 - version: "0.0.99"
   changes:
     - description: enhance integration
       type: enhancement
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
 - version: "0.0.43"
   changes:
     - description: add security alert rule for ESA vulnerabilities
       type: enhancement
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
 - version: "0.0.41"
   changes:
     - description: add security alert rule for ESA vulnerabilities
       type: enhancement
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
 - version: "0.0.29"
   changes:
     - description: fix cursor issue + vulnerability.description shortening
       type: enhancement
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/2
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
 - version: "0.0.28"
   changes:
     - description: add cursor settings in cel program to avoid duplicate events
       type: enhancement
-      link: https://github.com/tonyguillemot-tech/esa-integration/pull/1
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/1
 - version: "0.0.27"
   changes:
     - description: Initial draft of the package

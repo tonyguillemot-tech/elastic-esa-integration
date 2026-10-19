@@ -2,6 +2,15 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Add a quality check on vulnerability.report_id so it is always a single
+        ESA-YYYY-NN identifier: it is read from the last parenthesis group of
+        the title, the first ESA identifier is kept and the other ones (several
+        ESA in one title, or an alias such as GHSA-xw7x-h9fj-p2c7) go to the new
+        esa.vulnerability.aliases field; documents whose identifier still does
+        not match are tagged esa_invalid_report_id
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
+    - description: >
         Add affected version ranges. The CEL program now looks up each CVE of
         a new advisory in the CVE Services API and attaches the records to the
         event (new variables cve_api_url and enable_cve_enrichment); the

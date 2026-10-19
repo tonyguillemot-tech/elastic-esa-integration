@@ -19,6 +19,10 @@ Each advisory includes a CVE and ESA identifier, details about the issue, and re
 ### How it works
 This integration periodically queries the Elastic Security Announcement RSS Feeds and ingests the advisories into Elasticsearch for analysis, alerting, and dashboarding.  
 
+For each new advisory, the integration also looks up the CVE in the [CVE Services API](https://cveawg.mitre.org/api/cve) to collect the affected version ranges published by Elastic. They are stored in `esa.vulnerability.affected.range`, one value per range, in interval notation: `[8.0.0,8.19.19]` includes both bounds, `[9.0.0,9.4.5)` excludes the upper bound, and a single published version is written `[9.5.0,9.5.0]`. `esa.vulnerability.affected.source` tells whether the ranges come from the CVE record (`cve_record`) or were extracted from the advisory text (`description`), which is the fallback when the lookup is disabled or fails, or when the CVE is not assigned by Elastic. Advisories for which no range can be determined have neither field.
+
+The CVE lookup needs outbound access to the CVE API URL (variable `CVE API URL`, `https://cveawg.mitre.org/api/cve` by default). Disable `Enrich with CVE records` if the Elastic Agent cannot reach it.
+
 
 ## What data does this integration collect?
 

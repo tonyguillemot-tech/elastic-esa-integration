@@ -2,6 +2,18 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Add affected version ranges. The CEL program now looks up each CVE of
+        a new advisory in the CVE Services API and attaches the records to the
+        event (new variables cve_api_url and enable_cve_enrichment); the
+        ingest pipeline turns them into esa.vulnerability.affected.range
+        (interval notation, one value per range) and esa.vulnerability.affected.source,
+        falling back to the "from X up to and including Y" ranges of the
+        advisory text when the lookup fails or the CVE is not assigned by
+        Elastic. The first-collection and incremental branches of the CEL
+        program are merged so the lookup is written once
+      type: enhancement
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
+    - description: >
         Deduplicate vulnerability.id when the same CVE is mentioned several
         times in an advisory: collect CVE identifiers in an insertion-ordered
         set instead of a list, so each CVE appears once while distinct CVEs

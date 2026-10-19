@@ -2,6 +2,16 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Deduplicate vulnerability.id when the same CVE is mentioned several
+        times in an advisory: collect CVE identifiers in an insertion-ordered
+        set instead of a list, so each CVE appears once while distinct CVEs
+        of the same advisory are all kept; read CVE identifiers from the
+        "CVE ID:" line of the advisory (falling back to the whole text when
+        absent) so CVEs only cited in the change log or as references to other
+        advisories (ESA-2026-51, ESA-2025-28) are no longer attached to it
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
+    - description: >
         Fix CVSS vector extraction for 10 advisories writing the vector without
         the CVSS: prefix (e.g. "Severity: High (7.6) - AV:N/..." instead of
         "- CVSS:3.1/AV:N/..."): anchor grok on AV:[NALP]/ with optional CVSS:ver/

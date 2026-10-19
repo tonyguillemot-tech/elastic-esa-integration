@@ -10,7 +10,12 @@
         falling back to the "from X up to and including Y" ranges of the
         advisory text when the lookup fails or the CVE is not assigned by
         Elastic. The first-collection and incremental branches of the CEL
-        program are merged so the lookup is written once
+        program are merged so the lookup is written once; the product name
+        published in the CVE record is stored in esa.vulnerability.affected.product;
+        esa.vulnerability.product and esa.vulnerability.affected.product get a
+        .text multi-field for case-insensitive full-text search, and
+        esa.vulnerability.name.text is now declared as a real multi-field (the
+        sibling declaration was ignored and never created the sub-field)
       type: enhancement
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >

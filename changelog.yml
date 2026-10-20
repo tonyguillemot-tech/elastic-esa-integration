@@ -2,6 +2,12 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Remove the intermediate cve_records field in the pipeline on_failure
+        handler so that a document that fails ingestion does not keep it and
+        get it dynamically mapped
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
+    - description: >
         Add a quality check on vulnerability.report_id so it is always a single
         ESA-YYYY-NN identifier: it is read from the last parenthesis group of
         the title, the first ESA identifier is kept and the other ones (several

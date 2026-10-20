@@ -2,6 +2,21 @@
 - version: "0.1.0"
   changes:
     - description: >
+        Pass initial_interval, enable_cve_enrichment and cve_api_url to the CEL program through the state block and wrap the result in state.with() instead of rendering the values into the program source, so a value cannot break or alter the program; guard the CVE lookup against network errors (the advisory is still collected, with the ranges taken from its text) and against feed items without description or feeds with a single item
+
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
+    - description: >
+        Report a failed RSS fetch as a single error event so the input logs the error and reports a degraded status instead of silently collecting nothing; the pipeline drops this error placeholder
+
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
+    - description: >
+        Stop removing event.original in the pipeline (the Fleet final pipeline honors the preserve_original_event tag), declare the ECS fields event.kind, event.category, event.type and event.original, and raise the minimum Kibana version to 8.12.0, the first release whose CEL input supports the optional field syntax used by the program
+
+      type: bugfix
+      link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
+    - description: >
         Remove the intermediate cve_records field in the pipeline on_failure handler so that a document that fails ingestion does not keep it and get it dynamically mapped
 
       type: bugfix

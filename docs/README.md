@@ -86,15 +86,28 @@ affected products and versions, CVSS severity, and remediation steps.
 | data_stream.type | Data stream type. | constant_keyword |
 | ecs.version | ECS version this event conforms to. `ecs.version` is a required field and must exist in all events. When querying across multiple indices -- which may conform to slightly different ECS versions -- this field lets integrations adjust to the schema version of the events. | keyword |
 | error.message | Error message. | match_only_text |
+| esa.vulnerability.affected.product | Product name(s) as published in the CVE record (e.g. Kibana, Eck Operator). Only set when the ranges come from a CVE record. The spelling can differ from esa.vulnerability.product. | keyword |
+| esa.vulnerability.affected.product.text | Multi-field of `esa.vulnerability.affected.product` for case-insensitive full-text search. | text |
+| esa.vulnerability.affected.range | Affected version ranges, one value per range, in interval notation: [from,to] when the upper bound is included, [from,to) when it is excluded, (from,to] when the lower bound is excluded (e.g. [8.0.0,8.19.19] or [9.0.0,9.4.5)). A single published version is written [v,v]. | keyword |
+| esa.vulnerability.affected.source | Where the ranges come from: cve_record (CVE Services record) or description (extracted from the advisory text). | keyword |
+| esa.vulnerability.aliases | Other identifiers published with the advisory in its title: the other ESA identifiers when a title covers several advisories, or an identifier of another kind such as a GitHub advisory (GHSA-xxxx-xxxx-xxxx). | keyword |
 | esa.vulnerability.archived | Indicates if the ESA topic is archived | keyword |
+| esa.vulnerability.capec.id | CAPEC identifier (e.g. CAPEC-86) | keyword |
+| esa.vulnerability.capec.name | CAPEC name (e.g. XSS Targeting HTML Content) | keyword |
 | esa.vulnerability.closed | Indicates if the ESA topic is closed | keyword |
+| esa.vulnerability.cvss_vector | CVSS vector string (e.g. 3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H) | keyword |
+| esa.vulnerability.cwe.id | CWE identifier (e.g. CWE-79) | keyword |
+| esa.vulnerability.cwe.name | CWE name (e.g. Improper Neutralization of Input) | keyword |
 | esa.vulnerability.description | Description of the vulnerability from ESA | text |
 | esa.vulnerability.fixed_version | Fixed/patched version(s) | keyword |
 | esa.vulnerability.name | Name of the vulnerability | keyword |
-| esa.vulnerability.name.text | Name of the vulnerability | text |
+| esa.vulnerability.name.text | Multi-field of `esa.vulnerability.name` for full-text search. | text |
 | esa.vulnerability.pinned | Indicates if the ESA topic is pinned | keyword |
 | esa.vulnerability.product | Impacted product | keyword |
+| esa.vulnerability.product.text | Multi-field of `esa.vulnerability.product` for case-insensitive full-text search. | text |
 | esa.vulnerability.vendor | Project affected | keyword |
+| event.dataset | Event dataset. | constant_keyword |
+| event.module | Event module. | constant_keyword |
 | input.type | Type of input that collected the event. | keyword |
 | tags | List of keywords used to tag each event. | keyword |
 | vulnerability.classification | The classification of the vulnerability scoring system. For example (https://www.first.org/cvss/) | keyword |

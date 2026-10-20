@@ -1,144 +1,146 @@
 {
-  "id": "elastic_security_advisories",
-  "type": "security-rule",
-  "attributes": {
-    "name": "Elastic Security Advisories",
-    "rule_id": "elastic_security_advisories",
-    "description": "This rule will trigger an alert when a new Security vulnerability concerning Elastic is communicated.",
-    "type": "query",
-    "language": "kuery",
-    "index": ["logs-*"],
-    "query": "",
-    "filters": [
-      {
-        "meta": {
-          "type": "combined",
-          "relation": "AND",
-          "params": [
+    "id": "elastic_security_advisories",
+    "type": "security-rule",
+    "attributes": {
+        "name": "Elastic Security Advisories",
+        "rule_id": "elastic_security_advisories",
+        "description": "This rule will trigger an alert when a new Security vulnerability concerning Elastic is communicated.",
+        "type": "query",
+        "language": "kuery",
+        "index": [
+            "logs-*"
+        ],
+        "query": "",
+        "filters": [
             {
-              "query": {
-                "exists": {
-                  "field": "vulnerability.id"
+                "meta": {
+                    "type": "combined",
+                    "relation": "AND",
+                    "params": [
+                        {
+                            "query": {
+                                "exists": {
+                                    "field": "vulnerability.id"
+                                }
+                            },
+                            "meta": {
+                                "negate": false,
+                                "index": "logs-*",
+                                "key": "vulnerability.id",
+                                "field": "vulnerability.id",
+                                "value": "exists",
+                                "type": "exists",
+                                "disabled": false
+                            }
+                        },
+                        {
+                            "meta": {
+                                "negate": false,
+                                "index": "logs-*",
+                                "key": "data_stream.dataset",
+                                "field": "data_stream.dataset",
+                                "params": {
+                                    "query": "esa.vulnerability"
+                                },
+                                "type": "phrase",
+                                "disabled": false
+                            },
+                            "query": {
+                                "match_phrase": {
+                                    "data_stream.dataset": "esa.vulnerability"
+                                }
+                            }
+                        }
+                    ]
                 }
-              },
-              "meta": {
-                "negate": false,
-                "index": "logs-*",
-                "key": "vulnerability.id",
-                "field": "vulnerability.id",
-                "value": "exists",
-                "type": "exists",
-                "disabled": false
-              }
+            }
+        ],
+        "enabled": false,
+        "interval": "5m",
+        "from": "now-180d",
+        "to": "now",
+        "severity": "low",
+        "severity_mapping": [
+            {
+                "field": "vulnerability.severity",
+                "operator": "equals",
+                "severity": "medium",
+                "value": "Medium"
             },
             {
-              "meta": {
-                "negate": false,
-                "index": "logs-*",
-                "key": "data_stream.dataset",
-                "field": "data_stream.dataset",
-                "params": {
-                  "query": "esa.vulnerability"
-                },
-                "type": "phrase",
-                "disabled": false
-              },
-              "query": {
-                "match_phrase": {
-                  "data_stream.dataset": "esa.vulnerability"
-                }
-              }
+                "field": "vulnerability.severity",
+                "operator": "equals",
+                "severity": "high",
+                "value": "High"
+            },
+            {
+                "field": "vulnerability.severity",
+                "operator": "equals",
+                "severity": "critical",
+                "value": "Critical"
             }
-          ]
-        }
-      }
-    ],
-    "enabled": false,
-    "interval": "5m",
-    "from": "now-180d",
-    "to": "now",
-    "severity": "low",
-    "severity_mapping": [
-      {
-        "field": "vulnerability.severity",
-        "operator": "equals",
-        "severity": "medium",
-        "value": "Medium"
-      },
-      {
-        "field": "vulnerability.severity",
-        "operator": "equals",
-        "severity": "high",
-        "value": "High"
-      },
-      {
-        "field": "vulnerability.severity",
-        "operator": "equals",
-        "severity": "critical",
-        "value": "Critical"
-      }
-    ],
-    "risk_score": 21,
-    "max_signals": 100,
-    "required_fields": [
-      {
-        "name": "esa.vulnerability.description",
-        "type": "text",
-        "ecs": false
-      },
-      {
-        "name": "esa.vulnerability.name",
-        "type": "keyword",
-        "ecs": false
-      },
-      {
-        "name": "vulnerability.id",
-        "type": "keyword",
-        "ecs": true
-      },
-      {
-        "name": "vulnerability.severity",
-        "type": "keyword",
-        "ecs": true
-      },
-      {
-        "name": "esa.vulnerability.product",
-        "type": "keyword",
-        "ecs": false
-      },
-      {
-        "name": "esa.vulnerability.fixed_version",
-        "type": "keyword",
-        "ecs": false
-      },
-      {
-        "name": "esa.vulnerability.published_date",
-        "type": "date",
-        "ecs": false
-      }
-    ],
-    "rule_name_override": "esa.vulnerability.name",
-    "related_integrations": [
-      {
-        "package": "esa",
-        "version": "^0.0.46"
-      }
-    ],
-    "tags": [
-      "vulnerability",
-      "elastic_security_advisories"
-    ],
-    "author": [
-      "Tony Guillemot"
-    ],
-    "license": "Elastic License",
-    "version": 1,
-    "false_positives": [
-      "Elastic Security Advisories information may not be related to your environment."
-    ],
-    "references": [],
-    "setup": "Ensure the endpoint integration is installed and collecting process events.",
-    "actions": [],
-    "meta": {}
-  }
+        ],
+        "risk_score": 21,
+        "max_signals": 100,
+        "required_fields": [
+            {
+                "name": "esa.vulnerability.description",
+                "type": "text",
+                "ecs": false
+            },
+            {
+                "name": "esa.vulnerability.name",
+                "type": "keyword",
+                "ecs": false
+            },
+            {
+                "name": "vulnerability.id",
+                "type": "keyword",
+                "ecs": true
+            },
+            {
+                "name": "vulnerability.severity",
+                "type": "keyword",
+                "ecs": true
+            },
+            {
+                "name": "esa.vulnerability.product",
+                "type": "keyword",
+                "ecs": false
+            },
+            {
+                "name": "esa.vulnerability.fixed_version",
+                "type": "keyword",
+                "ecs": false
+            },
+            {
+                "name": "esa.vulnerability.published_date",
+                "type": "date",
+                "ecs": false
+            }
+        ],
+        "rule_name_override": "esa.vulnerability.name",
+        "related_integrations": [
+            {
+                "package": "esa",
+                "version": "^0.0.46"
+            }
+        ],
+        "tags": [
+            "vulnerability",
+            "elastic_security_advisories"
+        ],
+        "author": [
+            "Tony Guillemot"
+        ],
+        "license": "Elastic License",
+        "version": 1,
+        "false_positives": [
+            "Elastic Security Advisories information may not be related to your environment."
+        ],
+        "references": [],
+        "setup": "Ensure the endpoint integration is installed and collecting process events.",
+        "actions": [],
+        "meta": {}
+    }
 }

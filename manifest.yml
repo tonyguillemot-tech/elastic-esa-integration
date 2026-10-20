@@ -6,6 +6,7 @@ source:
   license: "Elastic-2.0"
 description: >
   Collects Elastic Security Advisories (ESA) with CVE details and remediations.
+
 type: integration
 categories:
   - custom
@@ -29,12 +30,12 @@ icons:
     type: image/svg+xml
 policy_templates:
   - name: esa
-    title: Elastic Security Advisories 
+    title: Elastic Security Advisories
     description: Collect proactively vulnerability visibility by collection Elastic Security Advisories
     inputs:
       - type: cel
         title: Elastic Security Advisories
-        description: Collect proactively vulnerability visibility by collection Elastic Security Advisories through RSS 
+        description: Collect proactively vulnerability visibility by collection Elastic Security Advisories through RSS
 owner:
   github: tonyguillemot-tech
   type: elastic

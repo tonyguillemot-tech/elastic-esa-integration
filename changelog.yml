@@ -2,149 +2,93 @@
 - version: "0.1.0"
   changes:
     - description: >
-        Remove the intermediate cve_records field in the pipeline on_failure
-        handler so that a document that fails ingestion does not keep it and
-        get it dynamically mapped
+        Remove the intermediate cve_records field in the pipeline on_failure handler so that a document that fails ingestion does not keep it and get it dynamically mapped
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Add a quality check on vulnerability.report_id so it is always a single
-        ESA-YYYY-NN identifier: it is read from the last parenthesis group of
-        the title, the first ESA identifier is kept and the other ones (several
-        ESA in one title, or an alias such as GHSA-xw7x-h9fj-p2c7) go to the new
-        esa.vulnerability.aliases field; documents whose identifier still does
-        not match are tagged esa_invalid_report_id
+        Add a quality check on vulnerability.report_id so it is always a single ESA-YYYY-NN identifier: it is read from the last parenthesis group of the title, the first ESA identifier is kept and the other ones (several ESA in one title, or an alias such as GHSA-xw7x-h9fj-p2c7) go to the new esa.vulnerability.aliases field; documents whose identifier still does not match are tagged esa_invalid_report_id
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Add affected version ranges. The CEL program now looks up each CVE of
-        a new advisory in the CVE Services API and attaches the records to the
-        event (new variables cve_api_url and enable_cve_enrichment); the
-        ingest pipeline turns them into esa.vulnerability.affected.range
-        (interval notation, one value per range) and esa.vulnerability.affected.source,
-        falling back to the ranges written in the "Affected Versions" section
-        of the advisory text (from X up to and including Y, X to Y, <= X,
-        before X, >= X and < Y, up to but not including X, N.x: All versions,
-        a single version) when the lookup fails or the CVE is not assigned by
-        Elastic. The first-collection and incremental branches of the CEL
-        program are merged so the lookup is written once; the product name
-        published in the CVE record is stored in esa.vulnerability.affected.product;
-        esa.vulnerability.product and esa.vulnerability.affected.product get a
-        .text multi-field for case-insensitive full-text search, and
-        esa.vulnerability.name.text is now declared as a real multi-field (the
-        sibling declaration was ignored and never created the sub-field)
+        Add affected version ranges. The CEL program now looks up each CVE of a new advisory in the CVE Services API and attaches the records to the event (new variables cve_api_url and enable_cve_enrichment); the ingest pipeline turns them into esa.vulnerability.affected.range (interval notation, one value per range) and esa.vulnerability.affected.source, falling back to the ranges written in the "Affected Versions" section of the advisory text (from X up to and including Y, X to Y, <= X, before X, >= X and < Y, up to but not including X, N.x: All versions, a single version) when the lookup fails or the CVE is not assigned by Elastic. The first-collection and incremental branches of the CEL program are merged so the lookup is written once; the product name published in the CVE record is stored in esa.vulnerability.affected.product; esa.vulnerability.product and esa.vulnerability.affected.product get a .text multi-field for case-insensitive full-text search, and esa.vulnerability.name.text is now declared as a real multi-field (the sibling declaration was ignored and never created the sub-field)
+
       type: enhancement
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Deduplicate vulnerability.id when the same CVE is mentioned several
-        times in an advisory: collect CVE identifiers in an insertion-ordered
-        set instead of a list, so each CVE appears once while distinct CVEs
-        of the same advisory are all kept; read CVE identifiers from the
-        "CVE ID:" line of the advisory (falling back to the whole text when
-        absent) so CVEs only cited in the change log or as references to other
-        advisories (ESA-2026-51, ESA-2025-28) are no longer attached to it
+        Deduplicate vulnerability.id when the same CVE is mentioned several times in an advisory: collect CVE identifiers in an insertion-ordered set instead of a list, so each CVE appears once while distinct CVEs of the same advisory are all kept; read CVE identifiers from the "CVE ID:" line of the advisory (falling back to the whole text when absent) so CVEs only cited in the change log or as references to other advisories (ESA-2026-51, ESA-2025-28) are no longer attached to it
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Fix CVSS vector extraction for 10 advisories writing the vector without
-        the CVSS: prefix (e.g. "Severity: High (7.6) - AV:N/..." instead of
-        "- CVSS:3.1/AV:N/..."): anchor grok on AV:[NALP]/ with optional CVSS:ver/
-        prefix capture; reconstruct esa.vulnerability.cvss_vector as ver/body using
-        inline version first, score.version as fallback; backfill score.version from
-        inline version when not extracted by CVSS grok (ESA-2024-21 pattern)
+        Fix CVSS vector extraction for 10 advisories writing the vector without the CVSS: prefix (e.g. "Severity: High (7.6) - AV:N/..." instead of "- CVSS:3.1/AV:N/..."): anchor grok on AV:[NALP]/ with optional CVSS:ver/ prefix capture; reconstruct esa.vulnerability.cvss_vector as ver/body using inline version first, score.version as fallback; backfill score.version from inline version when not extracted by CVSS grok (ESA-2024-21 pattern)
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Extend CWE and CAPEC extraction to arrays: replace grok+set processors
-        with Painless scripts that extract all CWE-NNN and CAPEC-NNN entries
-        into keyword arrays; structured format (Problem Type / Impact sections)
-        captures id+name pairs for each entry; narrative fallback collects all
-        (CWE-NNN)/(CAPEC-NNN) occurrences; fixes end-of-document case via
-        indexOf+substring instead of grok anchor
+        Extend CWE and CAPEC extraction to arrays: replace grok+set processors with Painless scripts that extract all CWE-NNN and CAPEC-NNN entries into keyword arrays; structured format (Problem Type / Impact sections) captures id+name pairs for each entry; narrative fallback collects all (CWE-NNN)/(CAPEC-NNN) occurrences; fixes end-of-document case via indexOf+substring instead of grok anchor
+
       type: enhancement
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Fix CVSS extraction for 6 additional advisories: replace CVSSv with
-        CVSS%{SPACE}v to handle 'CVSS v3.1' (space before version) in ESA-2024-34
-        to -37; add pattern with optional parentheses for ESA-2024-24 (no parens);
-        add pattern without CVSS prefix for ESA-2024-21 (Severity: High (7.6));
-        drop non-ESA advisory topics (no ESA-YYYY-NN in title) to exclude
-        situation reports and CVSS v4.0 announcements
+        Fix CVSS extraction for 6 additional advisories: replace CVSSv with CVSS%{SPACE}v to handle 'CVSS v3.1' (space before version) in ESA-2024-34 to -37; add pattern with optional parentheses for ESA-2024-24 (no parens); add pattern without CVSS prefix for ESA-2024-21 (Severity: High (7.6)); drop non-ESA advisory topics (no ESA-YYYY-NN in title) to exclude situation reports and CVSS v4.0 announcements
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Fix initial_interval not applied on backfill restart: value was read
-        from the CEL checkpoint state (first-run cached value) instead of the
-        live config; now injected as a Handlebars literal directly into the
-        CEL program source so changing the variable in Fleet takes effect immediately
+        Fix initial_interval not applied on backfill restart: value was read from the CEL checkpoint state (first-run cached value) instead of the live config; now injected as a Handlebars literal directly into the CEL program source so changing the variable in Fleet takes effect immediately
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Fix CVSS extraction for 2025 advisories: add inverted-order grok pattern
-        (CVSSv3.1: 7.0 (High) instead of CVSSv3.1: High ( 7.0 )); clean trailing
-        stray brace from esa.vulnerability.cvss_vector via gsub
+        Fix CVSS extraction for 2025 advisories: add inverted-order grok pattern (CVSSv3.1: 7.0 (High) instead of CVSSv3.1: High ( 7.0 )); clean trailing stray brace from esa.vulnerability.cvss_vector via gsub
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Fix vulnerability.description extraction: when no ESA ID is present in
-        the description body, skip the title paragraph by seeking the first
-        double newline; reorder section markers so Affected Versions is checked
-        before Severity (which appears later in the text); grok anchored to
-        ESA-YYYY-NN) to prevent false matches at (CAPEC-NNN) closing parens
+        Fix vulnerability.description extraction: when no ESA ID is present in the description body, skip the title paragraph by seeking the first double newline; reorder section markers so Affected Versions is checked before Severity (which appears later in the text); grok anchored to ESA-YYYY-NN) to prevent false matches at (CAPEC-NNN) closing parens
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Fix CEL type error: cast cursor.page to int on read to avoid
-        double+int overload when paginating the RSS backfill
+        Fix CEL type error: cast cursor.page to int on read to avoid double+int overload when paginating the RSS backfill
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Add initial_interval parameter (default 8760h) to limit RSS backfill
-        depth; pagination stops when a page contains items older than the interval
+        Add initial_interval parameter (default 8760h) to limit RSS backfill depth; pagination stops when a page contains items older than the interval
+
       type: enhancement
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Add full historical backfill via RSS pagination: on first start the CEL
-        program iterates through all ?page=N pages (want_more=true) until an
-        empty page signals the end, then switches to ongoing polling on page 0
-        filtered by cursor date; replaces broken grok CVSS patterns (4 patterns
-        failing on 24/25 docs due to Java regex not crossing newlines) with a
-        single validated pattern using %{SPACE} as newline separator; add
-        CWE/CAPEC/CVSS vector field extraction
+        Add full historical backfill via RSS pagination: on first start the CEL program iterates through all ?page=N pages (want_more=true) until an empty page signals the end, then switches to ongoing polling on page 0 filtered by cursor date; replaces broken grok CVSS patterns (4 patterns failing on 24/25 docs due to Java regex not crossing newlines) with a single validated pattern using %{SPACE} as newline separator; add CWE/CAPEC/CVSS vector field extraction
+
       type: enhancement
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Add preserve_original_event support: new boolean toggle preserves raw
-        event in event.original field; pipeline removes it by default unless
-        the preserve_original_event tag is set
+        Add preserve_original_event support: new boolean toggle preserves raw event in event.original field; pipeline removes it by default unless the preserve_original_event tag is set
+
       type: enhancement
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Clean up manifest variable titles: remove "Resource" prefix from UI
-        labels; "Resource Timeout" becomes "HTTP Client Timeout", "Resource
-        Proxy" becomes "Proxy URL", "Resource SSL Configuration" becomes
-        "SSL Configuration", etc.
+        Clean up manifest variable titles: remove "Resource" prefix from UI labels; "Resource Timeout" becomes "HTTP Client Timeout", "Resource Proxy" becomes "Proxy URL", "Resource SSL Configuration" becomes "SSL Configuration", etc.
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Restore input.type field definition in base-fields.yml; CEL input
-        always sets this field and it must be declared for system test validation
+        Restore input.type field definition in base-fields.yml; CEL input always sets this field and it must be declared for system test validation
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Fix ECS reference from v8.12.0 (non-existent) to v8.11.0; align
-        ecs.version in ingest pipeline accordingly
+        Fix ECS reference from v8.12.0 (non-existent) to v8.11.0; align ecs.version in ingest pipeline accordingly
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
     - description: >
-        Add _dev/build/build.yml to resolve ECS external field references,
-        fix base-fields.yml ECS alignment, correct pipeline vulnerability.enumeration
-        condition, add ignore_missing on optional RSS field renames, fix on_failure
-        processor order and add tags to all processors, align CEL template variable
-        names with manifest declarations, wire retry/redirect/rate_limit vars,
-        add want_more on all CEL branches, use now global variable, add
-        event.original encoding, declare redact.fields, fix kibana version
-        constraint to support 8.x and 9.x, update README placeholder
+        Add _dev/build/build.yml to resolve ECS external field references, fix base-fields.yml ECS alignment, correct pipeline vulnerability.enumeration condition, add ignore_missing on optional RSS field renames, fix on_failure processor order and add tags to all processors, align CEL template variable names with manifest declarations, wire retry/redirect/rate_limit vars, add want_more on all CEL branches, use now global variable, add event.original encoding, declare redact.fields, fix kibana version constraint to support 8.x and 9.x, update README placeholder
+
       type: bugfix
       link: https://github.com/tonyguillemot-tech/elastic-esa-integration/pull/2
 - version: "0.0.99"
